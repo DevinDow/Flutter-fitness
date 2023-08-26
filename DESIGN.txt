@@ -1,6 +1,8 @@
-TODO
-----
+DESIGN
+------
 UI
+- Tabs for Categories of Routines
+    - List of Routines in each Category
         - Routine Name, Description, Time (& Colored) - launches Routine
         - hard-code a Routine now, programatically add Routines later
 - executing a Routine
@@ -12,7 +14,9 @@ UI
 
 Classes
 - Routines
+    - Routine Name & Description
     - Moves & Times
+    - Category
 - Moves
     - Pose
         - Appendages
