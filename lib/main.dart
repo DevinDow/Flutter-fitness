@@ -3,21 +3,12 @@ import 'package:flutter/material.dart';
 import 'routine.dart';
 
 void main() {
-  // build list of all Routines
-  List<Routine> allRoutines = List<Routine>.generate(
-      24,
-      (i) => Routine(
-            'Routine #$i',
-            Categories.values[i % (Categories.max.index)],
-          ));
-
-  runApp(MyFitnessRoutines(allRoutines: allRoutines));
+  Routines.generateRoutines();
+  runApp(const MyFitnessRoutines());
 }
 
 class MyFitnessRoutines extends StatelessWidget {
-  final List<Routine> allRoutines;
-
-  const MyFitnessRoutines({super.key, required this.allRoutines});
+  const MyFitnessRoutines({super.key});
 
   // This widget is the root of your application.
   @override
@@ -40,16 +31,11 @@ class MyFitnessRoutines extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              RoutineCategoryListView(
-                  category: Categories.warmup, allRoutines: allRoutines),
-              RoutineCategoryListView(
-                  category: Categories.strength, allRoutines: allRoutines),
-              RoutineCategoryListView(
-                  category: Categories.agility, allRoutines: allRoutines),
-              RoutineCategoryListView(
-                  category: Categories.taiChi, allRoutines: allRoutines),
-              RoutineCategoryListView(
-                  category: Categories.meditation, allRoutines: allRoutines),
+              RoutineCategoryListView(category: Categories.warmup),
+              RoutineCategoryListView(category: Categories.strength),
+              RoutineCategoryListView(category: Categories.agility),
+              RoutineCategoryListView(category: Categories.taiChi),
+              RoutineCategoryListView(category: Categories.meditation),
             ],
           ),
         ),
@@ -64,9 +50,8 @@ class RoutineCategoryListView extends ListView {
   RoutineCategoryListView({
     super.key,
     required Categories category,
-    required List<Routine> allRoutines,
   }) {
-    for (Routine routine in allRoutines) {
+    for (Routine routine in Routines.routines) {
       if (routine.category == category) {
         categoryRoutines.add(routine);
       }
@@ -91,6 +76,11 @@ class RoutineTile extends ListTile {
 
   @override
   Widget build(BuildContext context) {
-    return Text(routine.name);
+    return Column(
+      children: [
+        Text(routine.name),
+        Text(routine.category.toString()),
+      ],
+    );
   }
 }
