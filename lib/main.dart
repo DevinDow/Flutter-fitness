@@ -4,8 +4,10 @@ import 'routine.dart';
 
 void main() {
   // build list of all Routines
-  List<Routine> allRoutines =
-      List<Routine>.generate(10, (i) => Routine('Routine #$i'));
+  List<Routine> allRoutines = List<Routine>.generate(
+      12,
+      (i) => Routine(
+          'Routine #$i', Categories.values[i % (Categories.max.index)]));
 
   runApp(MyFitnessRoutines(routines: allRoutines));
 }
