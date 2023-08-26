@@ -5,7 +5,7 @@ import 'routine.dart';
 void main() {
   // build list of all Routines
   List<Routine> allRoutines = List<Routine>.generate(
-      12,
+      24,
       (i) => Routine(
             'Routine #$i',
             Categories.values[i % (Categories.max.index)],
@@ -58,7 +58,7 @@ class MyFitnessRoutines extends StatelessWidget {
   }
 }
 
-class RoutineCategoryListView extends StatelessWidget /*ListView*/ {
+class RoutineCategoryListView extends ListView {
   late final List<Routine> categoryRoutines = List.empty(growable: true);
 
   RoutineCategoryListView({
@@ -75,12 +75,16 @@ class RoutineCategoryListView extends StatelessWidget /*ListView*/ {
 
   @override
   Widget build(BuildContext context) {
-    return RoutineTile(routine: categoryRoutines[0]);
-    // ListView.builder();
+    return ListView.builder(
+      itemCount: categoryRoutines.length,
+      itemBuilder: (context, index) {
+        return RoutineTile(routine: categoryRoutines[index]);
+      },
+    );
   }
 }
 
-class RoutineTile extends StatelessWidget /*ListTile*/ {
+class RoutineTile extends ListTile {
   final Routine routine;
 
   const RoutineTile({super.key, required this.routine});
