@@ -1,0 +1,19 @@
+TODO
+----
+UI
+- Tabs for Categories
+- List of Routines in each Category
+- Routine
+    - Text
+    - Timer
+    - Drawing Appendages to Canvas
+    - Controls
+    - Read Aloud
+
+DB
+- Moves
+    - Pose
+        - Appendages
+- Routines
+    - Routine Name & Description
+    - Moves & Times
