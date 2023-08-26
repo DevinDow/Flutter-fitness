@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         length: 5,
         child: Scaffold(
           appBar: AppBar(
+            title: const Text('My Fitness Routines'),
             bottom: const TabBar(
               tabs: [
                 Tab(text: "Warm-up"),
@@ -24,7 +25,6 @@ class MyApp extends StatelessWidget {
                 Tab(text: "Meditation"),
               ],
             ),
-            title: const Text('My Fitness Routines'),
           ),
           body: const TabBarView(
             children: [
