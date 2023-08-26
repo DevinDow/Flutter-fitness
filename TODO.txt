@@ -1,8 +1,7 @@
 TODO
 ----
 UI
-        - Routine Name, Description, Time (& Colored) - launches Routine
-        - hard-code a Routine now, programatically add Routines later
+    - click a Routine
 - executing a Routine
     - Text
     - Timer
@@ -11,8 +10,5 @@ UI
     - Read Aloud
 
 Classes
-- Routines
-    - Moves & Times
-- Moves
     - Pose
         - Appendages
