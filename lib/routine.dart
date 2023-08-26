@@ -1,3 +1,5 @@
+import 'package:fitness/task.dart';
+
 enum Categories {
   none,
   stretch,
@@ -15,6 +17,7 @@ enum Categories {
 class Routine {
   final String name;
   final Categories category;
+  List<Task> tasks = List.empty(growable: true);
 
   Routine({
     required this.name,

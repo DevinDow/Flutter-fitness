@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:fitness/move.dart';
 
 class MoveLibrary {
@@ -10,4 +12,6 @@ class MoveLibrary {
   static void generate() {
     add(Move(name: "Mountain Pose"));
   }
+
+  static const String MOUNTAIN_POSE = "Mountain Pose";
 }
