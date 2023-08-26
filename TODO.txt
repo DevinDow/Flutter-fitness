@@ -2,7 +2,9 @@ TODO
 ----
 UI
 - Tabs for Categories
-- List of Routines in each Category
+    - List of Routines in each Category
+        - Routine Name, Description, Time (& Colored) - launches Routine
+        - hard-code a Routine now, programatically add Routines later
 - Routine
     - Text
     - Timer
@@ -10,10 +12,11 @@ UI
     - Controls
     - Read Aloud
 
-DB
+Classes
 - Moves
     - Pose
         - Appendages
 - Routines
     - Routine Name & Description
     - Moves & Times
+    - Category

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'routine.dart';
+
 void main() {
-  runApp(const MyApp());
+  // build list of all Routines
+  List<Routine> allRoutines =
+      List<Routine>.generate(10, (i) => Routine('Routine #$i'));
+
+  runApp(MyFitnessRoutines(routines: allRoutines));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyFitnessRoutines extends StatelessWidget {
+  final List<Routine> routines;
+
+  const MyFitnessRoutines({super.key, required this.routines});
 
   // This widget is the root of your application.
   @override
