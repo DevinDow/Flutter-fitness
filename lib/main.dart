@@ -1,9 +1,12 @@
+import 'package:fitness/move_library.dart';
+import 'package:fitness/routine_library.dart';
 import 'package:flutter/material.dart';
 
 import 'routine.dart';
 
 void main() {
-  Routines.generateRoutines();
+  MoveLibrary.generate();
+  RoutineLibrary.generate();
   runApp(const MyFitnessRoutines());
 }
 
@@ -51,7 +54,7 @@ class RoutineCategoryListView extends ListView {
     super.key,
     required Categories category,
   }) {
-    for (Routine routine in Routines.routines) {
+    for (Routine routine in RoutineLibrary.routines.values) {
       if (routine.category == category) {
         categoryRoutines.add(routine);
       }
