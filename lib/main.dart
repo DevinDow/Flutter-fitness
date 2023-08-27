@@ -50,10 +50,7 @@ class MyFitnessRoutines extends StatelessWidget {
 class RoutineCategoryListView extends ListView {
   late final List<Routine> categoryRoutines = List.empty(growable: true);
 
-  RoutineCategoryListView({
-    super.key,
-    required Categories category,
-  }) {
+  RoutineCategoryListView({super.key, required Categories category}) {
     for (Routine routine in RoutineLibrary.routines.values) {
       if (routine.category == category) {
         categoryRoutines.add(routine);
@@ -66,24 +63,17 @@ class RoutineCategoryListView extends ListView {
     return ListView.builder(
       itemCount: categoryRoutines.length,
       itemBuilder: (context, index) {
-        return RoutineTile(routine: categoryRoutines[index]);
+        Routine routine = categoryRoutines[index];
+        return ListTile(
+          title: Text(routine.name),
+          subtitle: Text(routine.description),
+          leading: const Icon(Icons.accessibility),
+          trailing: routine.ran
+              ? const Icon(Icons.check_circle_outline)
+              : const Icon(Icons.circle_outlined),
+          onTap: () {},
+        );
       },
-    );
-  }
-}
-
-class RoutineTile extends ListTile {
-  final Routine routine;
-
-  const RoutineTile({super.key, required this.routine});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(routine.name),
-        Text(routine.category.toString()),
-      ],
     );
   }
 }

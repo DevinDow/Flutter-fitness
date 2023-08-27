@@ -16,11 +16,14 @@ enum Categories {
 
 class Routine {
   final String name;
-  final Categories category;
+  String description = "";
+  Categories category;
+  bool ran = false;
   List<Task> tasks = List.empty(growable: true);
 
   Routine({
     required this.name,
+    this.description = "",
     this.category = Categories.none,
   });
 }

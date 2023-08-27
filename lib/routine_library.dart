@@ -11,13 +11,22 @@ class RoutineLibrary {
 
   static void generate() {
     generateTestRoutine();
-    add(Routine(name: "Test Routine 2", category: Categories.warmup));
-    add(Routine(name: "Test Routine 3", category: Categories.strength));
+    add(Routine(
+        name: "Warm-up Test Routine 2",
+        description: "description of Warm-up Test Routine #2",
+        category: Categories.warmup));
+    add(Routine(
+        name: "Strength Test Routine",
+        description: "description of Strength Test Routine #3",
+        category: Categories.strength));
   }
 
   static void generateTestRoutine() {
-    Routine routine =
-        Routine(name: "Test Routine", category: Categories.warmup);
+    Routine routine = Routine(
+      name: "Test Routine",
+      description: "description of Warm-up Test Routine",
+      category: Categories.warmup,
+    );
     routine.tasks.add(Task(
         moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 10, restSeconds: 5));
     add(routine);
