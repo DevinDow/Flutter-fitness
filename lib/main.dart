@@ -60,7 +60,7 @@ class RoutineCategoryListView extends ListView {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: categoryRoutines.length,
       itemBuilder: (context, index) {
         Routine routine = categoryRoutines[index];
@@ -78,6 +78,7 @@ class RoutineCategoryListView extends ListView {
           onTap: () {},
         );
       },
+      separatorBuilder: (context, index) => Divider(color: Colors.black),
     );
   }
 }

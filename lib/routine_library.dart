@@ -16,8 +16,12 @@ class RoutineLibrary {
         description: "description of Warm-up Test Routine #2",
         category: Categories.warmup));
     add(Routine(
+        name: "Warm-up Test Routine 3",
+        description: "description of Warm-up Test Routine #3",
+        category: Categories.warmup));
+    add(Routine(
         name: "Strength Test Routine",
-        description: "description of Strength Test Routine #3",
+        description: "description of Strength Test Routine",
         category: Categories.strength));
   }
 
