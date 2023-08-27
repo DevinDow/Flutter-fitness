@@ -16,8 +16,9 @@ enum Categories {
 
 class Routine {
   final String name;
-  String description = "";
+  String description;
   Categories category;
+  int totalMinutes = 11;
   bool ran = false;
   List<Task> tasks = List.empty(growable: true);
 

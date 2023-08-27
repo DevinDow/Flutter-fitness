@@ -64,13 +64,17 @@ class RoutineCategoryListView extends ListView {
       itemCount: categoryRoutines.length,
       itemBuilder: (context, index) {
         Routine routine = categoryRoutines[index];
+        int duration = routine.totalMinutes;
         return ListTile(
           title: Text(routine.name),
           subtitle: Text(routine.description),
           leading: const Icon(Icons.accessibility),
-          trailing: routine.ran
-              ? const Icon(Icons.check_circle_outline)
-              : const Icon(Icons.circle_outlined),
+          trailing: /*Column(children: [*/
+              Text("$duration min"),
+          /*routine.ran
+                ? const Icon(Icons.check_circle_outline)
+                : const Icon(Icons.circle_outlined),
+          ]),*/
           onTap: () {},
         );
       },
