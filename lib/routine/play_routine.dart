@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'routine.dart';
+import 'task.dart';
 
 class PlayRoutine extends StatelessWidget {
   final Routine routine;
@@ -15,6 +16,8 @@ class PlayRoutine extends StatelessWidget {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
+    Task task = routine.tasks[0];
+
     return Scaffold(
         appBar: AppBar(
           title: Text(routine.name),
@@ -24,13 +27,13 @@ class PlayRoutine extends StatelessWidget {
             children: [
               // Move Name
               Text(
-                routine.name,
+                task.moveName,
                 style: textTheme.headlineLarge,
               ),
 
               // Instructions
               Text(
-                routine.description,
+                task.instructions,
                 style: textTheme.titleMedium,
               ),
 

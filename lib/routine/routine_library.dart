@@ -20,14 +20,15 @@ class RoutineLibrary {
       description: "description of Warm-up Test Routine",
       category: Categories.warmup,
     );
-    routine.tasks.add(Task(
-        moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 10, restSeconds: 5));
+    routine.tasks.add(Task(moveName: MoveLibrary.MOUNTAIN_POSE));
     add(routine);
 
-    add(Routine(
+    routine = Routine(
         name: "Strength Test Routine",
         description: "description of Strength Test Routine",
-        category: Categories.strength));
+        category: Categories.strength);
+    routine.tasks.add(Task(moveName: MoveLibrary.MOUNTAIN_POSE));
+    add(routine);
   }
 
   static void generateMorningYoga() {
@@ -38,7 +39,10 @@ class RoutineLibrary {
       category: Categories.warmup,
     );
     routine.tasks.add(Task(
-        moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 10, restSeconds: 5));
+        moveName: MoveLibrary.MOUNTAIN_POSE,
+        instructions: "Roll up slowly.  Stand tall.  Breathe.",
+        moveSeconds: 10,
+        restSeconds: 5));
     add(routine);
   }
 }
