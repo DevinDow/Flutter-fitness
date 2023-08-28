@@ -17,7 +17,8 @@ class MoveLibrary {
   static const String MOUNTAIN_POSE = "Mountain Pose";
 
   static void generateStandingFrontalMoves() {
-    Move move = MoveWithPose(name: MOUNTAIN_POSE);
+    MoveWithPose move = MoveWithPose(name: MOUNTAIN_POSE);
+    move.pose.torso.waist.y = 17;
 
     add(move);
   }
