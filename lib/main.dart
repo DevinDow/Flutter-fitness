@@ -1,9 +1,9 @@
-import 'package:fitness/move_library.dart';
-import 'package:fitness/play_routine.dart';
-import 'package:fitness/routine_library.dart';
+import 'package:fitness/move/move_library.dart';
+import 'package:fitness/routine/play_routine.dart';
+import 'package:fitness/routine/routine_library.dart';
 import 'package:flutter/material.dart';
 
-import 'routine.dart';
+import 'routine/routine.dart';
 
 void main() {
   MoveLibrary.generate(); // generate Library of Moves

@@ -1,4 +1,4 @@
-import 'package:fitness/routine.dart';
+import 'package:fitness/routine/routine.dart';
 
 class Move {
   late final String name;

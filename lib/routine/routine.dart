@@ -1,4 +1,4 @@
-import 'package:fitness/task.dart';
+import 'package:fitness/routine/task.dart';
 
 enum Categories {
   none,
