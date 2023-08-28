@@ -12,7 +12,7 @@ void main() {
   runApp(const MyFitnessRoutines());
 }
 
-/// Main Page Widget
+/// Main Page Widget => a DefaultTabController
 /// - Tabs for Categories of Routines
 /// - each Tab has a ListView of Routines that match that Category
 class MyFitnessRoutines extends StatelessWidget {
@@ -21,6 +21,14 @@ class MyFitnessRoutines extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "My Fitness Routines",
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        // https://api.flutter.dev/flutter/material/TextTheme-class.html
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(fontSize: 20, color: Colors.blueGrey),
+        ),
+      ),
       home: DefaultTabController(
         length: 5,
         child: Scaffold(
@@ -51,7 +59,7 @@ class MyFitnessRoutines extends StatelessWidget {
   }
 }
 
-/// ListView of Routines for the selected Category Tab
+/// ListViews of Routines for each Category Tab
 class RoutineCategoryListView extends ListView {
   late final List<Routine> categoryRoutines = List.empty(growable: true);
 
