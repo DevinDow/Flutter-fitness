@@ -4,7 +4,9 @@ UI
 - executing a Routine
     - Controls functioning
     - Timer functioning
-    - Drawing Appendages to Canvas
+    - Drawing to Canvas
+        - Size & Layout
+        - Draw Pose/Soccer/Ladder Body parts
     - Read Aloud
 
 Classes
