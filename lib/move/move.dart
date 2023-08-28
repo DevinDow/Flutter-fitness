@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../routine/routine.dart';
 
-class Move {
+abstract class Move {
   late final String name;
   String description;
   Categories category;
@@ -12,4 +14,6 @@ class Move {
     this.category = Categories.none,
     this.twoSides = false,
   });
+
+  void paint(Canvas canvas);
 }

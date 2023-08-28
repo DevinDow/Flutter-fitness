@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'routine.dart';
 import 'task.dart';
+import '../move/move_painter.dart';
 
 class PlayRoutine extends StatelessWidget {
   final Routine routine;
@@ -39,11 +40,19 @@ class PlayRoutine extends StatelessWidget {
 
               // Canvas
               Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                child: const SizedBox(
-                  width: 300,
-                  height: 300,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent)),
+                  child: LayoutBuilder(
+                    builder: (_, constraints) => Container(
+                      width: 300, //constraints.widthConstraints().maxWidth,
+                      height: 300, //constraints.heightConstraints().maxHeight,
+                      child: CustomPaint(
+                          painter: MovePainter(moveName: task.moveName)),
+                    ),
+                  ),
                 ),
               ),
 
