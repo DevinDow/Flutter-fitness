@@ -46,7 +46,7 @@ class PlayRoutine extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.blueAccent)),
                   child: LayoutBuilder(
-                    builder: (_, constraints) => Container(
+                    builder: (_, constraints) => SizedBox(
                       width: 300, //constraints.widthConstraints().maxWidth,
                       height: 300, //constraints.heightConstraints().maxHeight,
                       child: CustomPaint(
