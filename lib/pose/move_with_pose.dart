@@ -1,3 +1,5 @@
+import 'package:angles/angles.dart';
+import 'package:fitness/pose/torso.dart';
 import 'package:flutter/material.dart';
 
 import '../move/move.dart';
@@ -30,5 +32,9 @@ class MoveWithPose extends Move {
       const Rect.fromLTWH(150, 40, 100, 100),
       paint,
     );
+
+    // Torso
+    Torso torso = Torso(angle: const Angle.degrees(90));
+    torso.draw(canvas, paint);
   }
 }

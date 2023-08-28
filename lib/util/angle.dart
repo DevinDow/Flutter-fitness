@@ -8,7 +8,7 @@ class AngleUtil {
 class Angle {
   Angle();
 
-  /*//const
+  //const
 
   late final double radians;
 
@@ -37,4 +37,5 @@ class Angle {
     double dy = height2 - height1;
     radians = angles.Angle.asin(dy / length).radians;
   }
-}*/
+}
+*/

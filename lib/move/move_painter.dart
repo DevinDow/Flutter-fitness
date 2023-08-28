@@ -11,6 +11,9 @@ class MovePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.translate(size.width / 2, size.height / 2);
+    canvas.scale(1, -1);
+
     if (move != null) {
       move?.paint(canvas);
     }

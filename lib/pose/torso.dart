@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:angles/angles.dart' as angles;
 
 import '../util/point.dart';
@@ -71,5 +73,18 @@ class Torso {
       lHip = waist.offset(distanceWaistToHip * angle.getSin(), -distanceWaistToHip * angle.getCos());
     }
     */
+  }
+
+  // Methods
+  void draw(Canvas canvas, Paint paint) {
+    canvas.drawCircle(Offset(head.x, head.y), headSize, paint);
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        const Rect.fromLTWH(20, 40, 100, 100),
+        const Radius.circular(20),
+      ),
+      paint,
+    );
   }
 }
