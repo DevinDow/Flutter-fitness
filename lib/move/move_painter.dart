@@ -21,8 +21,10 @@ class MovePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.translate(size.width / 2, size.height / 2);
-    canvas.scale(PIXELS_PER_INCH, PIXELS_PER_INCH); // Scale to Inches
+    canvas.translate(size.width / 2, size.height); // Origi at floor center
+    double scale = size.height / BITMAP_INCHES;
+    canvas.scale(
+        scale, scale); // Scale to Inches that the virtual window represents
     canvas.scale(1, -1); // up is positive Y
 
     if (move != null) {
@@ -31,5 +33,5 @@ class MovePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(MovePainter oldDelegate) => false;
+  bool shouldRepaint(MovePainter oldDelegate) => true;
 }

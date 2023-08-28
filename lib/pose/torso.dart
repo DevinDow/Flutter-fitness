@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:angles/angles.dart' as angles;
 
-import '../util/point.dart';
-
 class Torso {
   // Fields
   late final Offset waist;
@@ -82,12 +80,12 @@ class Torso {
     paint.strokeWidth = thickness;
     canvas.drawLine(waist, collar, paint);
 
-    canvas.drawRRect(
+    /*canvas.drawRRect(
       RRect.fromRectAndRadius(
-        const Rect.fromLTWH(20, 40, 100, 100),
+        const Rect.fromLTWH(20, 40, 20, 20),
         const Radius.circular(20),
       ),
       paint,
-    );
+    );*/
   }
 }

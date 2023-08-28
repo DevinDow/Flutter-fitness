@@ -1,5 +1,8 @@
 TODO
 ----
+
+- Torso construction - can't set Offset.y in MoveLibrary.  Use Point on change Constructors?
+
 UI
 - executing a Routine
     - Controls functioning
