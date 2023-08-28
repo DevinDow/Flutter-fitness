@@ -6,10 +6,12 @@ UI
         - Routine Name, Description, Time (& Colored) - launches Routine
         - hard-code a Routine now, programatically add Routines later
 - executing a Routine
-    - Text
+    - Name
+    - Instructions
+    - Pose
     - Timer
-    - Drawing Appendages to Canvas
     - Controls
+    - Next/Remaining
     - Read Aloud
 
 Classes
@@ -17,6 +19,8 @@ Classes
     - Routine Name & Description
     - Moves & Times
     - Category
-- Moves
-    - Pose
-        - Appendages
+- Task
+- Move
+    - MoveWithPose
+- Pose
+    - Appendages

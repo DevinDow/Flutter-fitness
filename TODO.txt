@@ -1,14 +1,15 @@
 TODO
 ----
 UI
-    - click a Routine
 - executing a Routine
-    - Text
-    - Timer
+    - Controls functioning
+    - Timer functioning
     - Drawing Appendages to Canvas
-    - Controls
     - Read Aloud
 
 Classes
+    - Task
+    - Move
+        - MoveWithPose
     - Pose
         - Appendages
