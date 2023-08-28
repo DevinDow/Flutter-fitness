@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:fitness/move/move.dart';
+import 'move.dart';
+import '../pose/move_with_pose.dart';
 
 class MoveLibrary {
   static Map<String, Move> moves = Map<String, Move>.identity();
@@ -16,6 +17,8 @@ class MoveLibrary {
   static const String MOUNTAIN_POSE = "Mountain Pose";
 
   static void generateStandingFrontalMoves() {
-    add(Move(name: MOUNTAIN_POSE));
+    Move move = MoveWithPose(name: MOUNTAIN_POSE);
+
+    add(move);
   }
 }

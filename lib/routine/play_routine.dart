@@ -1,5 +1,6 @@
-import 'package:fitness/routine/routine.dart';
 import 'package:flutter/material.dart';
+
+import 'routine.dart';
 
 class PlayRoutine extends StatelessWidget {
   final Routine routine;

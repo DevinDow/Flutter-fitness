@@ -1,6 +1,6 @@
-import '../move/move_library.dart';
 import 'routine.dart';
 import 'task.dart';
+import '../move/move_library.dart';
 
 class RoutineLibrary {
   static Map<String, Routine> routines = Map<String, Routine>.identity();
