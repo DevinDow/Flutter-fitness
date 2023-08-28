@@ -10,8 +10,12 @@ class MoveLibrary {
   }
 
   static void generate() {
-    add(Move(name: "Mountain Pose"));
+    generateStandingFrontalMoves();
   }
 
   static const String MOUNTAIN_POSE = "Mountain Pose";
+
+  static void generateStandingFrontalMoves() {
+    add(Move(name: "Mountain Pose"));
+  }
 }
