@@ -18,7 +18,7 @@ class MoveLibrary {
 
   static void generateStandingFrontalMoves() {
     MoveWithPose move = MoveWithPose(name: MOUNTAIN_POSE);
-    move.pose.torso.waist.y = 17;
+    move.pose.torso.waist.dy = 17;
 
     add(move);
   }

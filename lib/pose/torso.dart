@@ -6,11 +6,11 @@ import '../util/point.dart';
 
 class Torso {
   // Fields
-  late final Point waist;
+  late final Offset waist;
   late final double lengthRatio;
 
-  late final Point collar;
-  late final Point head;
+  late final Offset collar;
+  late final Offset head;
 
   /*Point[] points;
 
@@ -24,7 +24,7 @@ class Torso {
 
   // Constants
   static const double headSize = 10;
-  static const thickness = 10;
+  static const double thickness = 10;
   static const double length = 20;
   static const double lengthWithHead = length + headSize;
   //static const double distanceNeckToShoulder = thickness/2 + Arm.thickness/2;
@@ -39,19 +39,19 @@ class Torso {
     bool isHipsProfile = false,
   }) {
     // Waist
-    waist = Point(y: waistY);
+    waist = Offset(0, waistY);
 
     // Collar
-    collar = Point(
-      x: length * lengthRatio * angle.cos,
-      y: waistY + length + lengthRatio * angle.sin,
+    collar = Offset(
+      length * lengthRatio * angle.cos,
+      waistY + length + lengthRatio * angle.sin,
     );
 
     // Head
     double waistToHead = length * lengthRatio + thickness / 2 + headSize / 2;
-    head = Point(
-      x: waistToHead * angle.cos,
-      y: waistY + waistToHead * angle.sin,
+    head = Offset(
+      waistToHead * angle.cos,
+      waistY + waistToHead * angle.sin,
     );
 
     /*
@@ -77,7 +77,10 @@ class Torso {
 
   // Methods
   void draw(Canvas canvas, Paint paint) {
-    canvas.drawCircle(Offset(head.x, head.y), headSize, paint);
+    canvas.drawCircle(head, headSize / 2, paint);
+
+    paint.strokeWidth = thickness;
+    canvas.drawLine(waist, collar, paint);
 
     canvas.drawRRect(
       RRect.fromRectAndRadius(
