@@ -1,19 +1,23 @@
 import 'package:fitness/move_library.dart';
+import 'package:fitness/play_routine.dart';
 import 'package:fitness/routine_library.dart';
 import 'package:flutter/material.dart';
 
 import 'routine.dart';
 
 void main() {
-  MoveLibrary.generate();
-  RoutineLibrary.generate();
+  MoveLibrary.generate(); // generate Library of Moves
+  RoutineLibrary
+      .generate(); // generate Library of Routines (which contain a series of Tasks/Moves)
   runApp(const MyFitnessRoutines());
 }
 
+/// Main Page Widget
+/// - Tabs for Categories of Routines
+/// - each Tab has a ListView of Routines that match that Category
 class MyFitnessRoutines extends StatelessWidget {
   const MyFitnessRoutines({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +51,7 @@ class MyFitnessRoutines extends StatelessWidget {
   }
 }
 
+/// ListView of Routines for the selected Category Tab
 class RoutineCategoryListView extends ListView {
   late final List<Routine> categoryRoutines = List.empty(growable: true);
 
@@ -75,10 +80,17 @@ class RoutineCategoryListView extends ListView {
                 ? const Icon(Icons.check_circle_outline)
                 : const Icon(Icons.circle_outlined),
           ]),*/
-          onTap: () {},
+          onTap: () {
+            // launch PlayRoutine Page
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PlayRoutine(routine: routine)),
+            );
+          },
         );
       },
-      separatorBuilder: (context, index) => Divider(color: Colors.black),
+      separatorBuilder: (context, index) => const Divider(color: Colors.black),
     );
   }
 }
