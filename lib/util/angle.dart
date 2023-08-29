@@ -6,6 +6,7 @@ import 'package:angles/angles.dart' as angles;
 class Angle extends angles.Angle {
   // Constants
   static const N = Angle.degrees(90);
+  static const S = Angle.degrees(270);
 
   // Constructors
   const Angle.radians(final double radians) : super.radians(radians);

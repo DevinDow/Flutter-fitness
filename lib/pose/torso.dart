@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import '../util/point.dart';
 import '../util/angle.dart';
+import 'arm.dart';
+import 'leg.dart';
 
 class Torso {
   // Fields
@@ -11,23 +13,24 @@ class Torso {
   late final Point collar;
   late final Point head;
 
-  /*Point[] points;
+  late final List<Point> points;
 
-  Point rShoulder;
-  Point lShoulder;
+  late final Point rShoulder;
+  late final Point lShoulder;
 
-  Point rHip;
-  Point lHip;
+  late final Point rHip;
+  late final Point lHip;
 
-  bool mat = false;*/
+  bool mat = false;
 
   // Constants
   static const double headSize = 10;
   static const double thickness = 10;
   static const double length = 20;
   static const double lengthWithHead = length + headSize;
-  //static const double distanceNeckToShoulder = thickness/2 + Arm.thickness/2;
-  //static const double distanceWaistToHip = Leg.thickness/2 - 1;
+  static const double distanceNeckToShoulder =
+      thickness / 2 + Arm.armThickness / 2;
+  static const double distanceWaistToHip = Leg.legThickness / 2 - 1;
 
   // Constructors
   Torso({
@@ -53,25 +56,39 @@ class Torso {
       y: waistY + waistToHead * angle.sin,
     );
 
-    /*
     // Shoulders
     if (isShoulderProfile) {
-      rShoulder = collar.clone();
-      lShoulder = collar.clone();
+      rShoulder = collar;
+      lShoulder = collar;
     } else {
-      rShoulder = collar.offset(-distanceNeckToShoulder * angle.getSin(), distanceNeckToShoulder * angle.getCos());
-      lShoulder = collar.offset(distanceNeckToShoulder * angle.getSin(), -distanceNeckToShoulder * angle.getCos());
+      rShoulder = Point.offset(
+        collar,
+        -distanceNeckToShoulder * angle.sin,
+        distanceNeckToShoulder * angle.cos,
+      );
+      lShoulder = Point.offset(
+        collar,
+        distanceNeckToShoulder * angle.sin,
+        -distanceNeckToShoulder * angle.cos,
+      );
     }
 
     // Hips
     if (isHipsProfile) {
-      rHip = waist.clone();
-      lHip = waist.clone();
+      rHip = waist;
+      lHip = waist;
     } else {
-      rHip = waist.offset(-distanceWaistToHip * angle.getSin(), distanceWaistToHip * angle.getCos());
-      lHip = waist.offset(distanceWaistToHip * angle.getSin(), -distanceWaistToHip * angle.getCos());
+      rHip = Point.offset(
+        waist,
+        -distanceWaistToHip * angle.sin,
+        distanceWaistToHip * angle.cos,
+      );
+      lHip = Point.offset(
+        waist,
+        distanceWaistToHip * angle.sin,
+        -distanceWaistToHip * angle.cos,
+      );
     }
-    */
   }
 
   // Methods
