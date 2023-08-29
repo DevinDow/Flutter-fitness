@@ -77,12 +77,13 @@ class Torso {
 
   // Methods
   void draw(Canvas canvas) {
-    final paint = Paint();
+    final paint = Paint()
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
     canvas.drawCircle(head.offset, headSize / 2, paint);
 
     paint.strokeWidth = thickness;
-    paint.strokeCap = StrokeCap.round;
     canvas.drawLine(waist.offset, collar.offset, paint);
   }
 
