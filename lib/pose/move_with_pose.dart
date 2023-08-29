@@ -16,13 +16,7 @@ class MoveWithPose extends Move {
   // Methods
   @override
   void paint(Canvas canvas) {
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4.0
-      ..style = PaintingStyle.fill
-      ..color = Colors.indigo;
-
-    pose.draw(canvas, paint);
+    pose.draw(canvas);
   }
 
   @override

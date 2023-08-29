@@ -7,8 +7,8 @@ class Pose {
 
   Pose();
 
-  void draw(Canvas canvas, Paint paint) {
-    torso?.draw(canvas, paint);
+  void draw(Canvas canvas) {
+    torso?.draw(canvas);
   }
 
   @override

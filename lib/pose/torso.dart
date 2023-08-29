@@ -76,19 +76,14 @@ class Torso {
   }
 
   // Methods
-  void draw(Canvas canvas, Paint paint) {
+  void draw(Canvas canvas) {
+    final paint = Paint();
+
     canvas.drawCircle(head.offset, headSize / 2, paint);
 
     paint.strokeWidth = thickness;
+    paint.strokeCap = StrokeCap.round;
     canvas.drawLine(waist.offset, collar.offset, paint);
-
-    /*canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        const Rect.fromLTWH(20, 40, 20, 20),
-        const Radius.circular(20),
-      ),
-      paint,
-    );*/
   }
 
   @override
