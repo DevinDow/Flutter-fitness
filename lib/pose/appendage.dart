@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import '../util/angle.dart';
+import '../util/point.dart';
 
 abstract class Appendage {
   // Fields
@@ -20,4 +23,37 @@ abstract class Appendage {
       this.distalLengthRatio = 1.0});
 
   // Methods
+  Point getProximalPoint(Point attachmentPoint) => Point(
+      x: getProximalPointX(attachmentPoint.x),
+      y: getProximalPointY(attachmentPoint.y));
+  double getProximalPointX(double attachmentX) =>
+      attachmentX + proximalLengthRatio * segmentLength * proximalAngle.cos;
+  double getProximalPointY(double attachmentY) =>
+      attachmentY + proximalLengthRatio * segmentLength * proximalAngle.sin;
+
+  Point getDistalPoint(Point attachmentPoint) => Point(
+      x: getDistalPointX(attachmentPoint.x),
+      y: getDistalPointY(attachmentPoint.y));
+  double getDistalPointX(double attachmentX) =>
+      getProximalPointX(attachmentX) +
+      distalLengthRatio * segmentLength * proximalAngle.cos;
+  double getDistalPointY(double attachmentY) =>
+      getProximalPointY(attachmentY) +
+      distalLengthRatio * segmentLength * proximalAngle.sin;
+
+  void draw(Canvas canvas, Point attachmentPoint) {
+    final paint = Paint()
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..strokeWidth = thickness;
+
+    Point proximalPoint = getProximalPoint(attachmentPoint);
+    Point distalPoint = getDistalPoint(attachmentPoint);
+
+    canvas.drawLine(
+      proximalPoint.offset,
+      distalPoint.offset,
+      paint,
+    );
+  }
 }

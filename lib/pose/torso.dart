@@ -103,6 +103,7 @@ class Torso {
     canvas.drawLine(waist.offset, collar.offset, paint);
   }
 
+  // Overrides
   @override
   String toString() => 'Torso: waist=$waist, collar=$collar, head=$head';
 }
