@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../util/point.dart';
 import '../util/angle.dart';
 import 'arm.dart';
@@ -94,6 +96,8 @@ class Torso {
   // Methods
   void draw(Canvas canvas) {
     final paint = Paint()
+      //..style = PaintingStyle.stroke
+      //..strokeWidth = 0.0
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -101,6 +105,20 @@ class Torso {
 
     paint.strokeWidth = thickness;
     canvas.drawLine(waist.offset, collar.offset, paint);
+/*
+    paint.color = Colors.green;
+    canvas.drawCircle(head.offset, 1, paint);
+
+    paint.color = Colors.red;
+    canvas.drawCircle(collar.offset, 1, paint);
+
+    paint.color = Colors.blue;
+    canvas.drawCircle(lShoulder.offset, 1, paint);
+    canvas.drawCircle(rShoulder.offset, 1, paint);
+
+    paint.color = Colors.blue;
+    canvas.drawCircle(lHip.offset, 1, paint);
+    canvas.drawCircle(rHip.offset, 1, paint);*/
   }
 
   // Overrides
