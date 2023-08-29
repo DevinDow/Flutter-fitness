@@ -16,4 +16,8 @@ abstract class Move {
   });
 
   void paint(Canvas canvas);
+
+  @override
+  String toString() =>
+      'Move $name${category != Categories.none ? " of $category" : ""}${twoSides ? " twoSides " : ""}';
 }

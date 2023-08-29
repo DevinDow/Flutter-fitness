@@ -1,9 +1,16 @@
-import 'package:angles/angles.dart';
+import 'dart:ui';
 
 import 'torso.dart';
 
 class Pose {
-  Torso torso = Torso(angle: const Angle.degrees(90));
+  Torso? torso;
 
   Pose();
+
+  void draw(Canvas canvas, Paint paint) {
+    torso?.draw(canvas, paint);
+  }
+
+  @override
+  String toString() => '- $torso';
 }

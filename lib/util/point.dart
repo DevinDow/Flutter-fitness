@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 class Point {
   double x;
   double y;
 
-  Point({
-    this.x = 0.0,
-    this.y = 0.0,
-  });
+  Point({required this.x, required this.y});
+
+  Offset get offset => Offset(x, y);
+
+  @override
+  String toString() => '(${x.toStringAsFixed(0)},${y.toStringAsFixed(0)})';
 }

@@ -1,9 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:angles/angles.dart';
-import 'package:fitness/pose/torso.dart';
 import 'package:flutter/material.dart';
 
+import '../routine/routine.dart';
 import '../move/move.dart';
 import 'pose.dart';
 
@@ -23,8 +22,10 @@ class MoveWithPose extends Move {
       ..style = PaintingStyle.fill
       ..color = Colors.indigo;
 
-    // Torso
-    Torso torso = Torso(angle: const Angle.degrees(90));
-    torso.draw(canvas, paint);
+    pose.draw(canvas, paint);
   }
+
+  @override
+  String toString() =>
+      'MoveWithPose = $name${category != Categories.none ? " of $category" : ""}${twoSides ? " twoSides " : ""}:\n$pose';
 }

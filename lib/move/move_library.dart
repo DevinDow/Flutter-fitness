@@ -2,6 +2,7 @@
 
 import 'move.dart';
 import '../pose/move_with_pose.dart';
+import '../pose/torso.dart';
 
 class MoveLibrary {
   static Map<String, Move> moves = Map<String, Move>.identity();
@@ -18,7 +19,7 @@ class MoveLibrary {
 
   static void generateStandingFrontalMoves() {
     MoveWithPose move = MoveWithPose(name: MOUNTAIN_POSE);
-    //move.pose.torso.waist.dy = 17;
+    move.pose.torso = Torso(waistY: 17);
 
     add(move);
   }

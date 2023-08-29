@@ -2,13 +2,15 @@ import 'dart:ui';
 
 import 'package:angles/angles.dart' as angles;
 
+import '../util/point.dart';
+
 class Torso {
   // Fields
-  late final Offset waist;
+  Point waist = Point(x: 0, y: 10);
   late final double lengthRatio;
 
-  late final Offset collar;
-  late final Offset head;
+  late final Point collar;
+  late final Point head;
 
   /*Point[] points;
 
@@ -32,24 +34,24 @@ class Torso {
   Torso({
     double waistY = 0,
     this.lengthRatio = 1.0,
-    required angles.Angle angle,
+    angles.Angle angle = const angles.Angle.degrees(90),
     bool isShoulderProfile = false,
     bool isHipsProfile = false,
   }) {
     // Waist
-    waist = Offset(0, waistY);
+    waist = Point(x: 0, y: waistY);
 
     // Collar
-    collar = Offset(
-      length * lengthRatio * angle.cos,
-      waistY + length + lengthRatio * angle.sin,
+    collar = Point(
+      x: length * lengthRatio * angle.cos,
+      y: waistY + length + lengthRatio * angle.sin,
     );
 
     // Head
     double waistToHead = length * lengthRatio + thickness / 2 + headSize / 2;
-    head = Offset(
-      waistToHead * angle.cos,
-      waistY + waistToHead * angle.sin,
+    head = Point(
+      x: waistToHead * angle.cos,
+      y: waistY + waistToHead * angle.sin,
     );
 
     /*
@@ -75,10 +77,10 @@ class Torso {
 
   // Methods
   void draw(Canvas canvas, Paint paint) {
-    canvas.drawCircle(head, headSize / 2, paint);
+    canvas.drawCircle(head.offset, headSize / 2, paint);
 
     paint.strokeWidth = thickness;
-    canvas.drawLine(waist, collar, paint);
+    canvas.drawLine(waist.offset, collar.offset, paint);
 
     /*canvas.drawRRect(
       RRect.fromRectAndRadius(
@@ -88,4 +90,7 @@ class Torso {
       paint,
     );*/
   }
+
+  @override
+  String toString() => 'Torso: waist=$waist, collar=$collar, head=$head';
 }

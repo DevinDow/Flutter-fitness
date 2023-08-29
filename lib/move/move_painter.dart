@@ -28,6 +28,7 @@ class MovePainter extends CustomPainter {
     canvas.scale(1, -1); // up is positive Y
 
     if (move != null) {
+      print(move.toString());
       move?.paint(canvas);
     }
   }
