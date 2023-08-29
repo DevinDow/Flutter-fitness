@@ -1,16 +1,36 @@
-import 'package:angles/angles.dart' as angles;
+import 'dart:math' as math;
+//import 'package:angles/angles.dart' as angles;
 //import 'package:vector_math/vector_math.dart' as vector_math;
 
 //import 'point.dart';
 
-class Angle extends angles.Angle {
+class Angle {
+  // Fields
+  final double radians;
+
+  // Properties
+  double get degrees => (radians / math.pi) * 180.0;
+  double get sin => math.sin(radians);
+  double get cos => math.cos(radians);
+  double get tan => math.tan(radians);
+
   // Constants
   static const N = Angle.degrees(90);
   static const S = Angle.degrees(270);
 
   // Constructors
-  const Angle.radians(final double radians) : super.radians(radians);
-  const Angle.degrees(final int degrees) : super.degrees(1.0 * degrees);
+  const Angle.radians(this.radians);
+  const Angle.degrees(final int degrees)
+      : radians = 1.0 * degrees / 180.0 * math.pi;
+
+  // Operators
+  Angle operator +(final Angle other) => Angle.radians(radians + other.radians);
+  Angle operator -(final Angle other) => Angle.radians(radians - other.radians);
+  Angle operator -() => Angle.radians(-radians);
+
+  // Overrides
+  @override
+  String toString() => "${degrees.toStringAsFixed(0)}°";
 }
 /*class Angle {
   late final double radians;

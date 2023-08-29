@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import '../util/angle.dart';
 import '../util/point.dart';
@@ -14,6 +16,10 @@ abstract class Appendage {
   // Properties
   double get thickness;
   double get segmentLength;
+  double get height =>
+      (proximalLengthRatio * segmentLength * proximalAngle.sin +
+              distalLengthRatio * segmentLength * distalAngle.sin)
+          .abs();
 
   // Constructor
   Appendage(
@@ -48,12 +54,25 @@ abstract class Appendage {
       ..strokeWidth = thickness;
 
     Point proximalPoint = getProximalPoint(attachmentPoint);
-    Point distalPoint = getDistalPoint(attachmentPoint);
+    canvas.drawLine(
+      attachmentPoint.offset,
+      proximalPoint.offset,
+      paint,
+    );
 
+    Point distalPoint = getDistalPoint(attachmentPoint);
     canvas.drawLine(
       proximalPoint.offset,
       distalPoint.offset,
       paint,
     );
+
+    /*
+    paint.color = Colors.green;
+    canvas.drawCircle(attachmentPoint.offset, 2, paint);
+
+    paint.color = Colors.red;
+    canvas.drawCircle(proximalPoint.offset, 1, paint);
+    */
   }
 }
