@@ -67,12 +67,15 @@ abstract class Appendage {
       paint,
     );
 
-    /*
+/*
     paint.color = Colors.green;
     canvas.drawCircle(attachmentPoint.offset, 2, paint);
 
     paint.color = Colors.red;
     canvas.drawCircle(proximalPoint.offset, 1, paint);
-    */
+
+    paint.color = Colors.blue;
+    canvas.drawCircle(distalPoint.offset, 1, paint);
+*/
   }
 }
