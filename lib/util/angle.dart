@@ -1,22 +1,26 @@
-/*import 'package:vector_math/vector_math.dart' as vector_math;
 import 'package:angles/angles.dart' as angles;
+//import 'package:vector_math/vector_math.dart' as vector_math;
 
-import 'point.dart';
+//import 'point.dart';
 
-class AngleUtil {
+class Angle extends angles.Angle {
+  // Constants
+  static const N = Angle.degrees(90);
 
-class Angle {
-  Angle();
-
-  //const
-
+  // Constructors
+  const Angle.radians(final double radians) : super.radians(radians);
+  const Angle.degrees(final int degrees) : super.degrees(1.0 * degrees);
+}
+/*class Angle {
   late final double radians;
 
-  Angle({required this.radians});
+  // Constants
+  factory Angle.N() => Angle.degrees(90);
 
-  Angle.fromDegrees({required int degrees}) {
-    radians = vector_math.radians(1.0 * degrees);
-  }
+  // Constructors
+  const Angle.radians(this.radians);
+
+  const Angle.degrees(final int degrees) : radians = vector_math.radians(1.0 * degrees);
 
   Angle.fromDyDx({required double dy, required double dx}) {
     if (dy == 0 && dx == 0) {

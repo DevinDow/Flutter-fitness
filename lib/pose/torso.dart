@@ -1,8 +1,7 @@
 import 'dart:ui';
 
-import 'package:angles/angles.dart' as angles;
-
 import '../util/point.dart';
+import '../util/angle.dart';
 
 class Torso {
   // Fields
@@ -34,7 +33,7 @@ class Torso {
   Torso({
     double waistY = 0,
     this.lengthRatio = 1.0,
-    angles.Angle angle = const angles.Angle.degrees(90),
+    Angle angle = Angle.N,
     bool isShoulderProfile = false,
     bool isHipsProfile = false,
   }) {
