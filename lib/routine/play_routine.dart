@@ -19,6 +19,15 @@ class PlayRoutine extends StatefulWidget {
 class _PlayRoutineState extends State<PlayRoutine> {
   int taskIndex = 0;
 
+  int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
+  String get remainingString =>
+      //"10 more = 4 min",
+      (remainingCount > 0) ? "$remainingCount more = ? min" : "";
+
+  String get nextMoveString => (remainingCount > 0)
+      ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
+      : "";
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
@@ -104,11 +113,11 @@ class _PlayRoutineState extends State<PlayRoutine> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Next: Down Dog",
+                  nextMoveString,
                   style: textTheme.bodyLarge,
                 ),
                 Text(
-                  "10 more = 4 min",
+                  remainingString, // "10 more = 4 min"
                   style: textTheme.bodyMedium,
                 ),
               ],
