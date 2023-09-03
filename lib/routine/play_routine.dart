@@ -4,7 +4,7 @@ import 'routine.dart';
 import 'task.dart';
 import '../move/move_painter.dart';
 
-class PlayRoutine extends StatelessWidget {
+class PlayRoutine extends StatefulWidget {
   final Routine routine;
 
   const PlayRoutine({
@@ -13,15 +13,20 @@ class PlayRoutine extends StatelessWidget {
   });
 
   @override
+  State<PlayRoutine> createState() => _PlayRoutineState();
+}
+
+class _PlayRoutineState extends State<PlayRoutine> {
+  @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    Task task = routine.tasks[0];
+    Task task = widget.routine.tasks[0];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(routine.name),
+        title: Text(widget.routine.name),
       ),
       body: SafeArea(
         child: Column(
