@@ -13,9 +13,13 @@ class Angle {
   double get sin => math.sin(radians);
   double get cos => math.cos(radians);
   double get tan => math.tan(radians);
+  Angle get mirror => Angle.radians(math.pi - radians);
+  Angle get opposite => Angle.radians(radians + math.pi);
 
   // Constants
+  static const E = Angle.degrees(0);
   static const N = Angle.degrees(90);
+  static const W = Angle.degrees(180);
   static const S = Angle.degrees(270);
 
   // Constructors

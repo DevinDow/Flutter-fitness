@@ -21,6 +21,8 @@ class RoutineLibrary {
       category: Categories.warmup,
     );
     routine.tasks.add(Task(moveName: MoveLibrary.MOUNTAIN_POSE));
+    routine.tasks.add(Task(moveName: MoveLibrary.HIGH_KNEES));
+    routine.tasks.add(Task(moveName: MoveLibrary.DONE));
     add(routine);
 
     routine = Routine(
