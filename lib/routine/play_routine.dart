@@ -17,12 +17,14 @@ class PlayRoutine extends StatefulWidget {
 }
 
 class _PlayRoutineState extends State<PlayRoutine> {
+  int taskIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    Task task = widget.routine.tasks[0];
+    Task task = widget.routine.tasks[taskIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +73,13 @@ class _PlayRoutineState extends State<PlayRoutine> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      if (taskIndex > 0) {
+                        taskIndex--;
+                      }
+                    });
+                  },
                   child: const Icon(Icons.skip_previous),
                 ),
                 ElevatedButton(
@@ -79,7 +87,13 @@ class _PlayRoutineState extends State<PlayRoutine> {
                   child: const Icon(Icons.play_arrow),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      if (taskIndex < widget.routine.tasks.length - 1) {
+                        taskIndex++;
+                      }
+                    });
+                  },
                   child: const Icon(Icons.skip_next),
                 ),
               ],
