@@ -34,8 +34,18 @@ class Angle {
 
   // Overrides
   @override
-  String toString() => "${degrees.toStringAsFixed(0)}°";
+  String toString() {
+    double normalized = degrees;
+    while (normalized < 0) {
+      normalized += 360.0;
+    }
+    while (normalized >= 360.0) {
+      normalized -= 360.0;
+    }
+    return "${normalized.toStringAsFixed(0)}°";
+  }
 }
+
 /*class Angle {
   late final double radians;
 
