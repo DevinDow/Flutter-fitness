@@ -35,8 +35,9 @@ class MoveLibrary {
     add(move);
 
     move = MoveWithPose(name: DONE);
-    move.pose.lLeg = Leg(proximalAngle: Angle.S + const Angle.degrees(6));
-    move.pose.rLeg = Leg(proximalAngle: Angle.S - const Angle.degrees(6));
+    legAngle = Angle.S + const Angle.degrees(6);
+    move.pose.lLeg = Leg.angles(legAngle);
+    move.pose.rLeg = Leg.angles(legAngle.mirror);
     move.pose.torso =
         Torso(waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
     Angle armProximalAngle = Angle.W - const Angle.degrees(30);
