@@ -2,14 +2,14 @@ TODO
 ----
 
 UI
+- Routine List
+    - Total Time
 - executing a Routine
     - Timer Widget & functioning
         - GestureDetector for Pause/Next
     - Read Aloud
 
-Classes
-    - Task
-    - Move
-        - MoveWithPose
-    - Pose
-        - Appendages
+RoutineLibrary & MoveLibrary
+- Props
+- Soccer
+- Ladder
