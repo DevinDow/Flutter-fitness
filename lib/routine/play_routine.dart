@@ -13,17 +13,19 @@ class PlayRoutine extends StatefulWidget {
   });
 
   @override
-  State<PlayRoutine> createState() => _PlayRoutineState();
+  State<PlayRoutine> createState() => _TaskState();
 }
 
-class _PlayRoutineState extends State<PlayRoutine> {
+class _TaskState extends State<PlayRoutine> {
   int taskIndex = 0;
 
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
+
+  // "10 more = 4 min"
   String get remainingString =>
-      //"10 more = 4 min",
       (remainingCount > 0) ? "$remainingCount more = ? min" : "";
 
+  // "Next: Jumping Jacks"
   String get nextMoveString => (remainingCount > 0)
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
@@ -71,7 +73,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
               ),
             ),
 
-            // Time
+            // Timer
             Text(
               "1:00",
               style: textTheme.headlineMedium,
@@ -82,6 +84,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
+                  child: const Icon(Icons.skip_previous),
                   onPressed: () {
                     setState(() {
                       if (taskIndex > 0) {
@@ -89,13 +92,13 @@ class _PlayRoutineState extends State<PlayRoutine> {
                       }
                     });
                   },
-                  child: const Icon(Icons.skip_previous),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
                   child: const Icon(Icons.play_arrow),
+                  onPressed: () {},
                 ),
                 ElevatedButton(
+                  child: const Icon(Icons.skip_next),
                   onPressed: () {
                     setState(() {
                       if (taskIndex < widget.routine.tasks.length - 1) {
@@ -103,7 +106,6 @@ class _PlayRoutineState extends State<PlayRoutine> {
                       }
                     });
                   },
-                  child: const Icon(Icons.skip_next),
                 ),
               ],
             ),
@@ -113,7 +115,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  nextMoveString,
+                  nextMoveString, // "Next: Jumping Jacks"
                   style: textTheme.bodyLarge,
                 ),
                 Text(
