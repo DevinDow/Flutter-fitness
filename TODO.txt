@@ -3,11 +3,9 @@ TODO
 
 UI
 - executing a Routine
-    - Controls functioning
-    - Timer functioning
-    - Drawing to Canvas
-        - Size & Layout
-        - Draw Pose/Soccer/Ladder Body parts
+    - PlayRoutine Layout
+        - drawing grows with Window
+    - Timer Widget & functioning
     - Read Aloud
 
 Classes

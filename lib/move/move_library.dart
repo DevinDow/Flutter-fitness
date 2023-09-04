@@ -19,17 +19,42 @@ class MoveLibrary {
   }
 
   static const String MOUNTAIN_POSE = "Mountain Pose";
+  static const String DONE = "Done";
+  static const String HIGH_KNEES = "High Knees";
 
   static void generateStandingFrontalMoves() {
     MoveWithPose move = MoveWithPose(name: MOUNTAIN_POSE);
-
     move.pose.lLeg = Leg(proximalAngle: Angle.S + const Angle.degrees(3));
     move.pose.rLeg = Leg(proximalAngle: Angle.S - const Angle.degrees(3));
     move.pose.torso =
         Torso(waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
     move.pose.lArm = Arm(proximalAngle: Angle.S + const Angle.degrees(2));
     move.pose.rArm = Arm(proximalAngle: Angle.S - const Angle.degrees(2));
+    add(move);
 
+    move = MoveWithPose(name: DONE);
+    move.pose.lLeg = Leg(proximalAngle: Angle.S + const Angle.degrees(6));
+    move.pose.rLeg = Leg(proximalAngle: Angle.S - const Angle.degrees(6));
+    move.pose.torso =
+        Torso(waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
+    Angle armProximalAngle = Angle.W - const Angle.degrees(30);
+    Angle armDistalAngle = Angle.N + const Angle.degrees(10);
+    move.pose.rArm =
+        Arm(proximalAngle: armProximalAngle, distalAngle: armDistalAngle);
+    move.pose.lArm = Arm(
+        proximalAngle: armProximalAngle.mirror,
+        distalAngle: armDistalAngle.mirror);
+    add(move);
+  }
+
+  static void generateStandingProfileMoves() {
+    MoveWithPose move = MoveWithPose(name: HIGH_KNEES);
+    move.pose.lLeg = Leg(
+        proximalAngle: Angle.S + const Angle.degrees(10),
+        distalAngle: Angle.S - const Angle.degrees(10));
+    move.pose.rLeg = Leg(
+        proximalAngle: Angle.E + const Angle.degrees(10), distalAngle: Angle.S);
+    move.pose.torso = Torso(isShoulderProfile: true, isHipsProfile: true);
     add(move);
   }
 }

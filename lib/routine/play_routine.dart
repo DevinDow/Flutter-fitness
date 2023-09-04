@@ -4,7 +4,7 @@ import 'routine.dart';
 import 'task.dart';
 import '../move/move_painter.dart';
 
-class PlayRoutine extends StatelessWidget {
+class PlayRoutine extends StatefulWidget {
   final Routine routine;
 
   const PlayRoutine({
@@ -13,15 +13,33 @@ class PlayRoutine extends StatelessWidget {
   });
 
   @override
+  State<PlayRoutine> createState() => _TaskState();
+}
+
+class _TaskState extends State<PlayRoutine> {
+  int taskIndex = 0;
+
+  int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
+
+  // "10 more = 4 min"
+  String get remainingString =>
+      (remainingCount > 0) ? "$remainingCount more = ? min" : "";
+
+  // "Next: Jumping Jacks"
+  String get nextMoveString => (remainingCount > 0)
+      ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
+      : "";
+
+  @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    Task task = routine.tasks[0];
+    Task task = widget.routine.tasks[taskIndex];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(routine.name),
+        title: Text(widget.routine.name),
       ),
       body: SafeArea(
         child: Column(
@@ -55,7 +73,7 @@ class PlayRoutine extends StatelessWidget {
               ),
             ),
 
-            // Time
+            // Timer
             Text(
               "1:00",
               style: textTheme.headlineMedium,
@@ -66,16 +84,28 @@ class PlayRoutine extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
                   child: const Icon(Icons.skip_previous),
+                  onPressed: () {
+                    setState(() {
+                      if (taskIndex > 0) {
+                        taskIndex--;
+                      }
+                    });
+                  },
                 ),
                 ElevatedButton(
-                  onPressed: () {},
                   child: const Icon(Icons.play_arrow),
+                  onPressed: () {},
                 ),
                 ElevatedButton(
-                  onPressed: () {},
                   child: const Icon(Icons.skip_next),
+                  onPressed: () {
+                    setState(() {
+                      if (taskIndex < widget.routine.tasks.length - 1) {
+                        taskIndex++;
+                      }
+                    });
+                  },
                 ),
               ],
             ),
@@ -85,11 +115,11 @@ class PlayRoutine extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Next: Down Dog",
+                  nextMoveString, // "Next: Jumping Jacks"
                   style: textTheme.bodyLarge,
                 ),
                 Text(
-                  "10 more = 4 min",
+                  remainingString, // "10 more = 4 min"
                   style: textTheme.bodyMedium,
                 ),
               ],
