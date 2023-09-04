@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'routine.dart';
 import 'task.dart';
@@ -57,15 +58,15 @@ class _TaskState extends State<PlayRoutine> {
             ),
 
             // Canvas
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
+            // - let it expand as tall as Column allows, then make Width the same so it's a square
+            Expanded(
               child: Container(
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.blueAccent)),
                 child: LayoutBuilder(
                   builder: (_, constraints) => SizedBox(
-                    width: 300, //constraints.widthConstraints().maxWidth,
-                    height: 300, //constraints.heightConstraints().maxHeight,
+                    width: constraints
+                        .maxHeight, // make it a square based on Expanded's Height
                     child: CustomPaint(
                         painter: MovePainter(moveName: task.moveName)),
                   ),

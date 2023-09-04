@@ -3,9 +3,8 @@ TODO
 
 UI
 - executing a Routine
-    - PlayRoutine Layout
-        - drawing grows with Window
     - Timer Widget & functioning
+        - GestureDetector for Pause/Next
     - Read Aloud
 
 Classes
