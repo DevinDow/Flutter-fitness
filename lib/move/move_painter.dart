@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'move_library.dart';
 import 'move.dart';
 
+import 'dart:developer' as dev;
+
 class MovePainter extends CustomPainter {
   // Fields
   late final Move? move;
@@ -28,7 +30,7 @@ class MovePainter extends CustomPainter {
     canvas.scale(1, -1); // up is positive Y
 
     if (move != null) {
-      print(move.toString());
+      dev.log(move.toString(), name: "MovePainter");
       move?.paint(canvas);
     }
   }

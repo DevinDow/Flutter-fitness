@@ -36,15 +36,12 @@ abstract class Appendage {
   double getProximalPointY(double attachmentY) =>
       attachmentY + proximalLengthRatio * segmentLength * proximalAngle.sin;
 
-  Point getDistalPoint(Point attachmentPoint) => Point(
-      x: getDistalPointX(attachmentPoint.x),
-      y: getDistalPointY(attachmentPoint.y));
-  double getDistalPointX(double attachmentX) =>
-      getProximalPointX(attachmentX) +
-      distalLengthRatio * segmentLength * proximalAngle.cos;
-  double getDistalPointY(double attachmentY) =>
-      getProximalPointY(attachmentY) +
-      distalLengthRatio * segmentLength * proximalAngle.sin;
+  Point getDistalPoint(Point proximalPoint) => Point(
+      x: getDistalPointX(proximalPoint.x), y: getDistalPointY(proximalPoint.y));
+  double getDistalPointX(double proximalX) =>
+      proximalX + distalLengthRatio * segmentLength * distalAngle.cos;
+  double getDistalPointY(double proximalY) =>
+      proximalY + distalLengthRatio * segmentLength * distalAngle.sin;
 
   void draw(Canvas canvas, Point attachmentPoint) {
     final paint = Paint()
@@ -59,7 +56,7 @@ abstract class Appendage {
       paint,
     );
 
-    Point distalPoint = getDistalPoint(attachmentPoint);
+    Point distalPoint = getDistalPoint(proximalPoint);
     canvas.drawLine(
       proximalPoint.offset,
       distalPoint.offset,
@@ -76,5 +73,19 @@ abstract class Appendage {
     paint.color = Colors.blue;
     canvas.drawCircle(distalPoint.offset, 1, paint);
 */
+  }
+
+  @override
+  String toString() {
+    String output = "";
+    output += 'proximalAngle=$proximalAngle, ';
+    output += 'distalAngle=$distalAngle, ';
+    if (proximalLengthRatio != 1.0) {
+      output += 'proximalLengthRatio=$proximalLengthRatio, ';
+    }
+    if (distalLengthRatio != 1.0) {
+      output += 'distalLengthRatio=$distalLengthRatio';
+    }
+    return output;
   }
 }

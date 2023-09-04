@@ -29,5 +29,13 @@ class Pose {
 
   // Overrides
   @override
-  String toString() => '- $torso';
+  String toString() {
+    String output = "";
+    if (torso != null) output += '\t-$torso\n';
+    if (rLeg != null) output += '\t-rLeg=$rLeg\n';
+    if (lLeg != null) output += '\t-lLeg=$lLeg\n';
+    if (rArm != null) output += '\t-rArm=$rArm\n';
+    if (lArm != null) output += '\t-lArm=$lArm\n';
+    return output;
+  }
 }
