@@ -24,12 +24,14 @@ class MoveLibrary {
 
   static void generateStandingFrontalMoves() {
     MoveWithPose move = MoveWithPose(name: MOUNTAIN_POSE);
-    move.pose.lLeg = Leg(proximalAngle: Angle.S + const Angle.degrees(3));
-    move.pose.rLeg = Leg(proximalAngle: Angle.S - const Angle.degrees(3));
+    Angle legAngle = Angle.S + const Angle.degrees(3);
+    move.pose.lLeg = Leg.angles(legAngle);
+    move.pose.rLeg = Leg.angles(legAngle.mirror);
     move.pose.torso =
         Torso(waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
-    move.pose.lArm = Arm(proximalAngle: Angle.S + const Angle.degrees(2));
-    move.pose.rArm = Arm(proximalAngle: Angle.S - const Angle.degrees(2));
+    Angle armAngle = Angle.S + const Angle.degrees(2);
+    move.pose.lArm = Arm.angles(armAngle);
+    move.pose.rArm = Arm.angles(armAngle.mirror);
     add(move);
 
     move = MoveWithPose(name: DONE);

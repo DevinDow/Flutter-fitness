@@ -18,4 +18,8 @@ class Leg extends Appendage {
       super.proximalLengthRatio = 1.0,
       super.distalAngle = Angle.S,
       super.distalLengthRatio = 1.0});
+
+  Leg.angles(Angle angles) {
+    proximalAngle = distalAngle = angles;
+  }
 }

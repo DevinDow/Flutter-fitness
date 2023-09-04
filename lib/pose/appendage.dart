@@ -6,11 +6,11 @@ import '../util/point.dart';
 
 abstract class Appendage {
   // Fields
-  Angle proximalAngle;
-  double proximalLengthRatio;
+  Angle proximalAngle = Angle.S;
+  double proximalLengthRatio = 1.0;
 
-  Angle distalAngle;
-  double distalLengthRatio;
+  Angle distalAngle = Angle.S;
+  double distalLengthRatio = 1.0;
 
   // Properties
   double get thickness;
