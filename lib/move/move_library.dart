@@ -16,6 +16,7 @@ class MoveLibrary {
 
   static void generate() {
     generateStandingFrontalMoves();
+    generateStandingProfileMoves();
   }
 
   static const String MOUNTAIN_POSE = "Mountain Pose";
@@ -57,7 +58,10 @@ class MoveLibrary {
         distalAngle: Angle.S - const Angle.degrees(10));
     move.pose.rLeg = Leg(
         proximalAngle: Angle.E + const Angle.degrees(10), distalAngle: Angle.S);
-    move.pose.torso = Torso(isShoulderProfile: true, isHipsProfile: true);
+    move.pose.torso = Torso(
+        isShoulderProfile: true,
+        isHipsProfile: true,
+        waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
     add(move);
   }
 }

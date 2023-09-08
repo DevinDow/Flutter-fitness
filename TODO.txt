@@ -5,8 +5,8 @@ UI
 - Routine List
     - Total Time
 - executing a Routine
-    - Timer Widget & functioning
-        - GestureDetector for Pause/Next
+    - Rest Time
+    - GestureDetector for Pause/Next
     - Read Aloud
 
 RoutineLibrary & MoveLibrary
