@@ -10,8 +10,8 @@ class Task {
   Task({
     required this.moveName,
     this.instructions = "",
-    this.moveSeconds = 1,
-    this.restSeconds = 1,
+    this.moveSeconds = 0,
+    this.restSeconds = 0,
     //this.Side =
   });
 }

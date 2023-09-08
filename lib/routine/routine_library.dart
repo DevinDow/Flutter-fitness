@@ -20,8 +20,10 @@ class RoutineLibrary {
       description: "description of Warm-up Test Routine",
       category: Categories.warmup,
     );
-    routine.tasks.add(Task(moveName: MoveLibrary.MOUNTAIN_POSE));
-    routine.tasks.add(Task(moveName: MoveLibrary.HIGH_KNEES));
+    routine.tasks.add(Task(
+        moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 3, restSeconds: 2));
+    routine.tasks.add(Task(
+        moveName: MoveLibrary.HIGH_KNEES, moveSeconds: 10, restSeconds: 2));
     routine.tasks.add(Task(moveName: MoveLibrary.DONE));
     add(routine);
 

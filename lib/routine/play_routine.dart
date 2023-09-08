@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 import 'routine.dart';
 import 'task.dart';
@@ -20,13 +21,14 @@ class PlayRoutine extends StatefulWidget {
 class _TaskState extends State<PlayRoutine> {
   int taskIndex = 0;
 
+  // remainingCount
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
 
-  // "10 more = 4 min"
+  // remainingString (ex. "10 more = 4 min")
   String get remainingString =>
       (remainingCount > 0) ? "$remainingCount more = ? min" : "";
 
-  // "Next: Jumping Jacks"
+  // nextMoveString (ex. "Next: Jumping Jacks")
   String get nextMoveString => (remainingCount > 0)
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
@@ -37,6 +39,10 @@ class _TaskState extends State<PlayRoutine> {
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
+
+    bool running = false;
+    CountdownController countdownController =
+        CountdownController(autoStart: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -75,15 +81,33 @@ class _TaskState extends State<PlayRoutine> {
             ),
 
             // Timer
-            Text(
-              "1:00",
-              style: textTheme.headlineMedium,
+            Countdown(
+              controller: countdownController,
+              seconds: task.moveSeconds,
+              build: (_, double time) => Text(
+                time % 60 > 9
+                    ? "${(time / 60).toStringAsFixed(0)}:${(time % 60).toStringAsFixed(0)}"
+                    : "${(time / 60).toStringAsFixed(0)}:0${(time % 60).toStringAsFixed(0)}",
+                style: textTheme.headlineMedium,
+              ),
+              interval: const Duration(milliseconds: 1000),
+              onFinished: () {
+                setState(() {
+                  if (taskIndex < widget.routine.tasks.length - 1) {
+                    taskIndex++;
+                    if (running) {
+                      countdownController.restart();
+                    }
+                  }
+                });
+              },
             ),
 
             // Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // Previous
                 ElevatedButton(
                   child: const Icon(Icons.skip_previous),
                   onPressed: () {
@@ -94,10 +118,26 @@ class _TaskState extends State<PlayRoutine> {
                     });
                   },
                 ),
+
+                // Play
                 ElevatedButton(
                   child: const Icon(Icons.play_arrow),
-                  onPressed: () {},
+                  onPressed: () {
+                    running = true;
+                    countdownController.start();
+                  },
                 ),
+
+                // Pause
+                ElevatedButton(
+                  child: const Icon(Icons.pause),
+                  onPressed: () {
+                    running = false;
+                    countdownController.pause();
+                  },
+                ),
+
+                // Next
                 ElevatedButton(
                   child: const Icon(Icons.skip_next),
                   onPressed: () {
