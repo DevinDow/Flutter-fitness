@@ -101,11 +101,14 @@ class _TaskState extends State<PlayRoutine>
             CustomTimer(
               controller: _controller,
               builder: (state, remaining) {
-                // Build the widget you want!
+                int totalSecondsRemaining =
+                    (remaining.duration.inMilliseconds / 1000).round();
+                int minutesRemaining = (totalSecondsRemaining / 60).floor();
+                int secondsRemaining = totalSecondsRemaining % 60;
                 return Column(
                   children: [
                     Text(
-                      "${remaining.minutes}:${remaining.seconds}",
+                      "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}",
                       style: textTheme.headlineMedium,
                     ),
                   ],

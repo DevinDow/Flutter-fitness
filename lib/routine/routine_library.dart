@@ -23,7 +23,7 @@ class RoutineLibrary {
     routine.tasks.add(Task(
         moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 3, restSeconds: 2));
     routine.tasks.add(Task(
-        moveName: MoveLibrary.HIGH_KNEES, moveSeconds: 10, restSeconds: 2));
+        moveName: MoveLibrary.HIGH_KNEES, moveSeconds: 61, restSeconds: 2));
     routine.tasks.add(Task(moveName: MoveLibrary.DONE));
     add(routine);
 
