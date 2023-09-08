@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:custom_timer/custom_timer.dart';
 
 import 'routine.dart';
 import 'task.dart';
@@ -17,19 +17,29 @@ class PlayRoutine extends StatefulWidget {
   State<PlayRoutine> createState() => _TaskState();
 }
 
-class _TaskState extends State<PlayRoutine> {
+class _TaskState extends State<PlayRoutine>
+    with SingleTickerProviderStateMixin {
   int taskIndex = 0;
 
+  // remainingCount
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
 
-  // "10 more = 4 min"
+  // remainingString (ex. "10 more = 4 min")
   String get remainingString =>
       (remainingCount > 0) ? "$remainingCount more = ? min" : "";
 
-  // "Next: Jumping Jacks"
+  // nextMoveString (ex. "Next: Jumping Jacks")
   String get nextMoveString => (remainingCount > 0)
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
+
+  late final CustomTimerController _controller = CustomTimerController(
+    vsync: this,
+    begin: const Duration(),
+    end: const Duration(),
+    initialState: CustomTimerState.reset,
+    interval: CustomTimerInterval.seconds,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +47,19 @@ class _TaskState extends State<PlayRoutine> {
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
+    _controller.begin = Duration(seconds: task.moveSeconds);
+    _controller.jumpTo(Duration(seconds: task.moveSeconds));
+
+    _controller.state.addListener(() {
+      if (_controller.state.value == CustomTimerState.finished) {
+        setState(() {
+          if (taskIndex < widget.routine.tasks.length - 1) {
+            taskIndex++;
+            _controller.start();
+          }
+        });
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -75,15 +98,29 @@ class _TaskState extends State<PlayRoutine> {
             ),
 
             // Timer
-            Text(
-              "1:00",
-              style: textTheme.headlineMedium,
+            CustomTimer(
+              controller: _controller,
+              builder: (state, remaining) {
+                int totalSecondsRemaining =
+                    (remaining.duration.inMilliseconds / 1000).round();
+                int minutesRemaining = (totalSecondsRemaining / 60).floor();
+                int secondsRemaining = totalSecondsRemaining % 60;
+                return Column(
+                  children: [
+                    Text(
+                      "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}",
+                      style: textTheme.headlineMedium,
+                    ),
+                  ],
+                );
+              },
             ),
 
             // Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // Previous
                 ElevatedButton(
                   child: const Icon(Icons.skip_previous),
                   onPressed: () {
@@ -94,10 +131,24 @@ class _TaskState extends State<PlayRoutine> {
                     });
                   },
                 ),
+
+                // Play
                 ElevatedButton(
                   child: const Icon(Icons.play_arrow),
-                  onPressed: () {},
+                  onPressed: () {
+                    _controller.start();
+                  },
                 ),
+
+                // Pause
+                ElevatedButton(
+                  child: const Icon(Icons.pause),
+                  onPressed: () {
+                    _controller.pause();
+                  },
+                ),
+
+                // Next
                 ElevatedButton(
                   child: const Icon(Icons.skip_next),
                   onPressed: () {
