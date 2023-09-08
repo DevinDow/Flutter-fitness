@@ -105,14 +105,9 @@ class _TaskState extends State<PlayRoutine>
                     (remaining.duration.inMilliseconds / 1000).round();
                 int minutesRemaining = (totalSecondsRemaining / 60).floor();
                 int secondsRemaining = totalSecondsRemaining % 60;
-                return Column(
-                  children: [
-                    Text(
-                      "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}",
-                      style: textTheme.headlineMedium,
-                    ),
-                  ],
-                );
+                String timerString =
+                    "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}";
+                return Text(timerString, style: textTheme.headlineMedium);
               },
             ),
 
