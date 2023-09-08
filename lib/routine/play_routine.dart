@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timer_count_down/timer_controller.dart';
-import 'package:timer_count_down/timer_count_down.dart';
+import 'package:custom_timer/custom_timer.dart';
 
 import 'routine.dart';
 import 'task.dart';
@@ -18,7 +17,8 @@ class PlayRoutine extends StatefulWidget {
   State<PlayRoutine> createState() => _TaskState();
 }
 
-class _TaskState extends State<PlayRoutine> {
+class _TaskState extends State<PlayRoutine>
+    with SingleTickerProviderStateMixin {
   int taskIndex = 0;
 
   // remainingCount
@@ -33,16 +33,33 @@ class _TaskState extends State<PlayRoutine> {
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
 
+  late final CustomTimerController _controller = CustomTimerController(
+    vsync: this,
+    begin: const Duration(),
+    end: const Duration(),
+    initialState: CustomTimerState.reset,
+    interval: CustomTimerInterval.seconds,
+  );
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
+    _controller.begin = Duration(seconds: task.moveSeconds);
+    _controller.jumpTo(Duration(seconds: task.moveSeconds));
 
-    bool running = false;
-    CountdownController countdownController =
-        CountdownController(autoStart: false);
+    _controller.state.addListener(() {
+      if (_controller.state.value == CustomTimerState.finished) {
+        setState(() {
+          if (taskIndex < widget.routine.tasks.length - 1) {
+            taskIndex++;
+            _controller.start();
+          }
+        });
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -81,25 +98,18 @@ class _TaskState extends State<PlayRoutine> {
             ),
 
             // Timer
-            Countdown(
-              controller: countdownController,
-              seconds: task.moveSeconds,
-              build: (_, double time) => Text(
-                time % 60 > 9
-                    ? "${(time / 60).toStringAsFixed(0)}:${(time % 60).toStringAsFixed(0)}"
-                    : "${(time / 60).toStringAsFixed(0)}:0${(time % 60).toStringAsFixed(0)}",
-                style: textTheme.headlineMedium,
-              ),
-              interval: const Duration(milliseconds: 1000),
-              onFinished: () {
-                setState(() {
-                  if (taskIndex < widget.routine.tasks.length - 1) {
-                    taskIndex++;
-                    if (running) {
-                      countdownController.restart();
-                    }
-                  }
-                });
+            CustomTimer(
+              controller: _controller,
+              builder: (state, remaining) {
+                // Build the widget you want!
+                return Column(
+                  children: [
+                    Text(
+                      "${remaining.minutes}:${remaining.seconds}",
+                      style: textTheme.headlineMedium,
+                    ),
+                  ],
+                );
               },
             ),
 
@@ -123,8 +133,7 @@ class _TaskState extends State<PlayRoutine> {
                 ElevatedButton(
                   child: const Icon(Icons.play_arrow),
                   onPressed: () {
-                    running = true;
-                    countdownController.start();
+                    _controller.start();
                   },
                 ),
 
@@ -132,8 +141,7 @@ class _TaskState extends State<PlayRoutine> {
                 ElevatedButton(
                   child: const Icon(Icons.pause),
                   onPressed: () {
-                    running = false;
-                    countdownController.pause();
+                    _controller.pause();
                   },
                 ),
 
