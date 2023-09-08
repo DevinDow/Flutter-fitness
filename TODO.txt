@@ -6,6 +6,7 @@ UI
     - Total Time
 - executing a Routine
     - Rest Time
+    - Play/Pause improvements
     - GestureDetector for Pause/Next
     - Read Aloud
 
