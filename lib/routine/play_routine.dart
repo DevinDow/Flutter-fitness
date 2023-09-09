@@ -33,6 +33,7 @@ class _TaskState extends State<PlayRoutine>
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
 
+  // Timer Controller
   late final CustomTimerController _controller = CustomTimerController(
     vsync: this,
     begin: const Duration(),
@@ -47,9 +48,12 @@ class _TaskState extends State<PlayRoutine>
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
+
+    // set Timer Controller to task.moveSeconds
     _controller.begin = Duration(seconds: task.moveSeconds);
     _controller.jumpTo(Duration(seconds: task.moveSeconds));
 
+    // Listen for Timer Controller to reach "finished"
     _controller.state.addListener(() {
       if (_controller.state.value == CustomTimerState.finished) {
         setState(() {
@@ -127,19 +131,15 @@ class _TaskState extends State<PlayRoutine>
                   },
                 ),
 
-                // Play
+                // Play/Pause
                 ElevatedButton(
                   child: const Icon(Icons.play_arrow),
                   onPressed: () {
-                    _controller.start();
-                  },
-                ),
-
-                // Pause
-                ElevatedButton(
-                  child: const Icon(Icons.pause),
-                  onPressed: () {
-                    _controller.pause();
+                    if (_controller.state.value == CustomTimerState.counting) {
+                      _controller.pause();
+                    } else {
+                      _controller.start();
+                    }
                   },
                 ),
 
