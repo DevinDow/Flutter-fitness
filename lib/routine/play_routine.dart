@@ -21,6 +21,22 @@ class _TaskState extends State<PlayRoutine>
     with SingleTickerProviderStateMixin {
   int taskIndex = 0;
 
+  void nextTask() {
+    if (taskIndex < widget.routine.tasks.length - 1) {
+      setState(() {
+        taskIndex++;
+      });
+    }
+  }
+
+  void prevTask() {
+    if (taskIndex > 0) {
+      setState(() {
+        taskIndex--;
+      });
+    }
+  }
+
   // remainingCount
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
 
@@ -56,12 +72,8 @@ class _TaskState extends State<PlayRoutine>
     // Listen for Timer Controller to reach "finished"
     _controller.state.addListener(() {
       if (_controller.state.value == CustomTimerState.finished) {
-        setState(() {
-          if (taskIndex < widget.routine.tasks.length - 1) {
-            taskIndex++;
-            _controller.start();
-          }
-        });
+        nextTask();
+        _controller.start();
       }
     });
 
@@ -121,14 +133,8 @@ class _TaskState extends State<PlayRoutine>
               children: [
                 // Previous
                 ElevatedButton(
+                  onPressed: prevTask,
                   child: const Icon(Icons.skip_previous),
-                  onPressed: () {
-                    setState(() {
-                      if (taskIndex > 0) {
-                        taskIndex--;
-                      }
-                    });
-                  },
                 ),
 
                 // Play/Pause
@@ -145,14 +151,8 @@ class _TaskState extends State<PlayRoutine>
 
                 // Next
                 ElevatedButton(
+                  onPressed: nextTask,
                   child: const Icon(Icons.skip_next),
-                  onPressed: () {
-                    setState(() {
-                      if (taskIndex < widget.routine.tasks.length - 1) {
-                        taskIndex++;
-                      }
-                    });
-                  },
                 ),
               ],
             ),
