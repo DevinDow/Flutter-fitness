@@ -1,6 +1,14 @@
 TODO
 ----
 
+BUGS
+- finished then prev
+    - keeps ticking
+    - messes up taskIndex because finished fires again
+    * can I make my own simple Timer?
+        - try https://pub.dev/packages/flutter_timer_widget https://github.com/evanemran/flutter_timer_widget
+        - copy in .dart files then modify/simplify
+
 UI
 - Routine List
     - Total Time
