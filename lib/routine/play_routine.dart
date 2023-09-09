@@ -21,22 +21,6 @@ class _TaskState extends State<PlayRoutine>
     with SingleTickerProviderStateMixin {
   int taskIndex = 0;
 
-  void nextTask() {
-    if (taskIndex < widget.routine.tasks.length - 1) {
-      setState(() {
-        taskIndex++;
-      });
-    }
-  }
-
-  void prevTask() {
-    if (taskIndex > 0) {
-      setState(() {
-        taskIndex--;
-      });
-    }
-  }
-
   // remainingCount
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
 
@@ -58,6 +42,32 @@ class _TaskState extends State<PlayRoutine>
     interval: CustomTimerInterval.seconds,
   );
 
+  // Methods
+  void nextTask() {
+    if (taskIndex < widget.routine.tasks.length - 1) {
+      setState(() {
+        taskIndex++;
+      });
+    }
+  }
+
+  void prevTask() {
+    if (taskIndex > 0) {
+      setState(() {
+        taskIndex--;
+      });
+    }
+  }
+
+  void playPause() {
+    if (_controller.state.value == CustomTimerState.counting) {
+      _controller.pause();
+    } else {
+      _controller.start();
+    }
+  }
+
+  // Overrides
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
@@ -139,14 +149,8 @@ class _TaskState extends State<PlayRoutine>
 
                 // Play/Pause
                 ElevatedButton(
+                  onPressed: playPause,
                   child: const Icon(Icons.play_arrow),
-                  onPressed: () {
-                    if (_controller.state.value == CustomTimerState.counting) {
-                      _controller.pause();
-                    } else {
-                      _controller.start();
-                    }
-                  },
                 ),
 
                 // Next
