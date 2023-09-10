@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:developer' as dev;
 
+import 'timer_controller.dart';
 import 'timer_widget.dart';
 import '../routine/routine.dart';
 import '../routine/task.dart';
@@ -20,7 +21,14 @@ class PlayRoutine extends StatefulWidget {
 
 class _TaskState extends State<PlayRoutine>
     with SingleTickerProviderStateMixin {
+  // taskIndex determines which Task of the Routine
   int taskIndex = 0;
+
+  // Timer Controller
+  late final TimerController _timerController = TimerController(
+    duration: const Duration(),
+    onFinished: onTimerFinished,
+  );
 
   // remainingCount
   int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
@@ -64,7 +72,9 @@ class _TaskState extends State<PlayRoutine>
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
-    dev.log(task.moveName, name: "PlayRoutine");
+    dev.log("moveName = ${task.moveName}, duration = ${task.moveSeconds}",
+        name: "PlayRoutine");
+    _timerController.duration = Duration(seconds: task.moveSeconds);
 
     return Scaffold(
       appBar: AppBar(
@@ -103,10 +113,7 @@ class _TaskState extends State<PlayRoutine>
             ),
 
             // Timer
-            TaskTimer(
-              duration: Duration(seconds: task.moveSeconds),
-              onFinished: onTimerFinished,
-            ),
+            TaskTimer(controller: _timerController),
 
             // Buttons
             Row(

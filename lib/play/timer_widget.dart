@@ -2,43 +2,27 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:developer' as dev;
 
+import 'timer_controller.dart';
+
 class TaskTimer extends StatefulWidget {
   const TaskTimer({
     Key? key,
-    required this.duration,
-    required this.onFinished,
+    required this.controller,
   }) : super(key: key);
 
-  final Duration duration;
-  final Function() onFinished;
-
-  /*void setDuration(Duration newDuration) {
-    duration = newDuration;
-  }*/
+  final TimerController controller;
 
   @override
   State<TaskTimer> createState() => _TaskTimerState();
 }
 
 class _TaskTimerState extends State<TaskTimer> {
-  var countDownDuration = const Duration();
-
-  late Duration duration;
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    duration = widget.duration;
-    countDownDuration = widget.duration;
     startTimer();
-    reset();
-  }
-
-  void reset() {
-    setState(() {
-      duration = countDownDuration;
-    });
   }
 
   void startTimer() {
@@ -49,18 +33,17 @@ class _TaskTimerState extends State<TaskTimer> {
 
   void pauseTimer() {
     timer?.cancel();
-    countDownDuration = duration;
   }
 
   void tick() {
     setState(() {
-      final seconds = duration.inSeconds - 1; // count down
+      final seconds = widget.controller.duration.inSeconds - 1; // count down
 
       if (seconds < 0) {
         timer?.cancel();
-        widget.onFinished.call();
+        widget.controller.onFinished.call();
       } else {
-        duration = Duration(seconds: seconds);
+        widget.controller.duration = Duration(seconds: seconds);
       }
     });
   }
@@ -70,12 +53,11 @@ class _TaskTimerState extends State<TaskTimer> {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    countDownDuration = widget.duration;
-
     String twoDigits(int n) => n.toString().padLeft(2, '0');
 
-    final minutesRemaining = duration.inMinutes.remainder(60);
-    final secondsRemaining = twoDigits(duration.inSeconds.remainder(60));
+    final minutesRemaining = widget.controller.duration.inMinutes.remainder(60);
+    final secondsRemaining =
+        twoDigits(widget.controller.duration.inSeconds.remainder(60));
 
     /*int totalSecondsRemaining =
         (remaining.duration.inMilliseconds / 1000).round();
