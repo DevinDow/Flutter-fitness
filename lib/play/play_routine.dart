@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:custom_timer/custom_timer.dart';
+import 'dart:developer' as dev;
 
-import 'routine.dart';
-import 'task.dart';
+import 'timer_controller.dart';
+import 'timer_widget.dart';
+import '../routine/routine.dart';
+import '../routine/task.dart';
 import '../move/move_painter.dart';
 
 class PlayRoutine extends StatefulWidget {
@@ -14,15 +16,38 @@ class PlayRoutine extends StatefulWidget {
   });
 
   @override
-  State<PlayRoutine> createState() => _TaskState();
+  State<PlayRoutine> createState() => _PlayRoutineState();
 }
 
-class _TaskState extends State<PlayRoutine>
-    with SingleTickerProviderStateMixin {
-  int taskIndex = 0;
+class _PlayRoutineState extends State<PlayRoutine> {
+  int _taskIndex = 0; // determines current Task of the Routine
+  set taskIndex(int newIndex) {
+    _taskIndex = newIndex;
+    _task = widget.routine.tasks[_taskIndex];
+    if (_task.moveSeconds > 0) {
+      _timerController.remaining = Duration(seconds: _task.moveSeconds);
+    } else {
+      _timerController.pauseTimer();
+    }
+  }
+
+  late Task _task; // current Task of the Routine
+  late final TimerController _timerController;
+
+  @override
+  void initState() {
+    _task = widget.routine.tasks[_taskIndex];
+
+    _timerController = TimerController(
+      remaining: Duration(seconds: _task.moveSeconds),
+      onTick: onTimerTick,
+      onFinished: onTimerFinished,
+    );
+    super.initState();
+  }
 
   // remainingCount
-  int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
+  int get remainingCount => widget.routine.tasks.length - (_taskIndex + 1);
 
   // remainingString (ex. "10 more = 4 min")
   String get remainingString =>
@@ -30,41 +55,36 @@ class _TaskState extends State<PlayRoutine>
 
   // nextMoveString (ex. "Next: Jumping Jacks")
   String get nextMoveString => (remainingCount > 0)
-      ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
+      ? "Next: ${widget.routine.tasks[_taskIndex + 1].moveName}"
       : "";
-
-  // Timer Controller
-  late final CustomTimerController _controller = CustomTimerController(
-    vsync: this,
-    begin: const Duration(),
-    end: const Duration(),
-    initialState: CustomTimerState.reset,
-    interval: CustomTimerInterval.seconds,
-  );
 
   // Methods
   void nextTask() {
-    if (taskIndex < widget.routine.tasks.length - 1) {
+    if (_taskIndex < widget.routine.tasks.length - 1) {
       setState(() {
-        taskIndex++;
+        taskIndex = _taskIndex + 1;
       });
     }
   }
 
   void prevTask() {
-    if (taskIndex > 0) {
+    if (_taskIndex > 0) {
       setState(() {
-        taskIndex--;
+        taskIndex = _taskIndex - 1;
       });
     }
   }
 
   void playPause() {
-    if (_controller.state.value == CustomTimerState.counting) {
-      _controller.pause();
-    } else {
-      _controller.start();
-    }
+    _timerController.toggleTimer();
+  }
+
+  void onTimerTick() {
+    setState(() {});
+  }
+
+  void onTimerFinished() {
+    nextTask();
   }
 
   // Overrides
@@ -73,19 +93,8 @@ class _TaskState extends State<PlayRoutine>
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    Task task = widget.routine.tasks[taskIndex];
-
-    // set Timer Controller to task.moveSeconds
-    _controller.begin = Duration(seconds: task.moveSeconds);
-    _controller.jumpTo(Duration(seconds: task.moveSeconds));
-
-    // Listen for Timer Controller to reach "finished"
-    _controller.state.addListener(() {
-      if (_controller.state.value == CustomTimerState.finished) {
-        nextTask();
-        _controller.start();
-      }
-    });
+    dev.log("moveName = ${_task.moveName}, duration = ${_task.moveSeconds}",
+        name: "PlayRoutine");
 
     return Scaffold(
       appBar: AppBar(
@@ -96,13 +105,13 @@ class _TaskState extends State<PlayRoutine>
           children: [
             // Move Name
             Text(
-              task.moveName,
+              _task.moveName,
               style: textTheme.headlineLarge,
             ),
 
             // Instructions
             Text(
-              task.instructions,
+              _task.instructions,
               style: textTheme.titleMedium,
             ),
 
@@ -117,25 +126,14 @@ class _TaskState extends State<PlayRoutine>
                     width: constraints
                         .maxHeight, // make it a square based on Expanded's Height
                     child: CustomPaint(
-                        painter: MovePainter(moveName: task.moveName)),
+                        painter: MovePainter(moveName: _task.moveName)),
                   ),
                 ),
               ),
             ),
 
             // Timer
-            CustomTimer(
-              controller: _controller,
-              builder: (state, remaining) {
-                int totalSecondsRemaining =
-                    (remaining.duration.inMilliseconds / 1000).round();
-                int minutesRemaining = (totalSecondsRemaining / 60).floor();
-                int secondsRemaining = totalSecondsRemaining % 60;
-                String timerString =
-                    "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}";
-                return Text(timerString, style: textTheme.headlineMedium);
-              },
-            ),
+            TaskTimer(controller: _timerController),
 
             // Buttons
             Row(
