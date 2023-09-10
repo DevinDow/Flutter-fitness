@@ -1,48 +1,57 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:developer' as dev;
 
-class TimerController extends ChangeNotifier {
-  late Duration duration;
-  /*Duration get duration => _duration;
-  set duration(Duration newDuration) {
-    _duration = newDuration;
-    reset();
-  }*/
+class TimerController {
+  Duration remaining;
 
-  final Function() onFinished;
+  final Function() _onTick;
+  final Function() _onFinished;
+
+  Timer? _timer;
+
+  bool get isRunning => _timer != null && _timer!.isActive;
 
   // Constructor
   TimerController({
-    required this.duration,
-    required this.onFinished,
-  });
+    required this.remaining,
+    required dynamic Function() onTick,
+    required dynamic Function() onFinished,
+  })  : _onFinished = onFinished,
+        _onTick = onTick {
+    dev.log("Constructor: $remaining", name: "TimerController");
+  }
 
   // Methods
-  /// Timer reset function.
-  void reset() {
-    //_state.value = CustomTimerState.reset;
-    notifyListeners();
+  void toggleTimer() {
+    if (isRunning) {
+      pauseTimer();
+    } else {
+      startTimer();
+    }
   }
 
-  /// Timer start function.
-  void start() {
-    //_state.value = CustomTimerState.counting;
-    notifyListeners();
+  void startTimer() {
+    dev.log("startTimer()", name: "TimerController");
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      tick();
+    });
   }
 
-  void _pause() {
-    //_state.value = CustomTimerState.paused;
-    notifyListeners();
+  void pauseTimer() {
+    dev.log("pauseTimer()", name: "TimerController");
+    _timer?.cancel();
   }
 
-  /// Timer pause function.
-  void pause() {
-    //if (state.value != CustomTimerState.counting) return;
-    _pause();
-  }
+  void tick() {
+    final seconds = remaining.inSeconds - 1; // count down
 
-  /// Timer finish function.
-  void finish() {
-    //_state.value = CustomTimerState.finished;
-    notifyListeners();
+    if (seconds < 0) {
+      dev.log("Finished", name: "TimerController");
+      _onFinished.call();
+    } else {
+      remaining = Duration(seconds: seconds);
+      dev.log("remaining = $remaining", name: "TimerController");
+      _onTick.call();
+    }
   }
 }

@@ -16,22 +16,38 @@ class PlayRoutine extends StatefulWidget {
   });
 
   @override
-  State<PlayRoutine> createState() => _TaskState();
+  State<PlayRoutine> createState() => _PlayRoutineState();
 }
 
-class _TaskState extends State<PlayRoutine>
-    with SingleTickerProviderStateMixin {
-  // taskIndex determines which Task of the Routine
-  int taskIndex = 0;
+class _PlayRoutineState extends State<PlayRoutine> {
+  int _taskIndex = 0; // determines current Task of the Routine
+  set taskIndex(int newIndex) {
+    _taskIndex = newIndex;
+    _task = widget.routine.tasks[_taskIndex];
+    if (_task.moveSeconds > 0) {
+      _timerController.remaining = Duration(seconds: _task.moveSeconds);
+    } else {
+      _timerController.pauseTimer();
+    }
+  }
 
-  // Timer Controller
-  late final TimerController _timerController = TimerController(
-    duration: const Duration(),
-    onFinished: onTimerFinished,
-  );
+  late Task _task; // current Task of the Routine
+  late final TimerController _timerController;
+
+  @override
+  void initState() {
+    _task = widget.routine.tasks[_taskIndex];
+
+    _timerController = TimerController(
+      remaining: Duration(seconds: _task.moveSeconds),
+      onTick: onTimerTick,
+      onFinished: onTimerFinished,
+    );
+    super.initState();
+  }
 
   // remainingCount
-  int get remainingCount => widget.routine.tasks.length - (taskIndex + 1);
+  int get remainingCount => widget.routine.tasks.length - (_taskIndex + 1);
 
   // remainingString (ex. "10 more = 4 min")
   String get remainingString =>
@@ -39,27 +55,33 @@ class _TaskState extends State<PlayRoutine>
 
   // nextMoveString (ex. "Next: Jumping Jacks")
   String get nextMoveString => (remainingCount > 0)
-      ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
+      ? "Next: ${widget.routine.tasks[_taskIndex + 1].moveName}"
       : "";
 
   // Methods
   void nextTask() {
-    if (taskIndex < widget.routine.tasks.length - 1) {
+    if (_taskIndex < widget.routine.tasks.length - 1) {
       setState(() {
-        taskIndex++;
+        taskIndex = _taskIndex + 1;
       });
     }
   }
 
   void prevTask() {
-    if (taskIndex > 0) {
+    if (_taskIndex > 0) {
       setState(() {
-        taskIndex--;
+        taskIndex = _taskIndex - 1;
       });
     }
   }
 
-  void playPause() {}
+  void playPause() {
+    _timerController.toggleTimer();
+  }
+
+  void onTimerTick() {
+    setState(() {});
+  }
 
   void onTimerFinished() {
     nextTask();
@@ -71,10 +93,8 @@ class _TaskState extends State<PlayRoutine>
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    Task task = widget.routine.tasks[taskIndex];
-    dev.log("moveName = ${task.moveName}, duration = ${task.moveSeconds}",
+    dev.log("moveName = ${_task.moveName}, duration = ${_task.moveSeconds}",
         name: "PlayRoutine");
-    _timerController.duration = Duration(seconds: task.moveSeconds);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,13 +105,13 @@ class _TaskState extends State<PlayRoutine>
           children: [
             // Move Name
             Text(
-              task.moveName,
+              _task.moveName,
               style: textTheme.headlineLarge,
             ),
 
             // Instructions
             Text(
-              task.instructions,
+              _task.instructions,
               style: textTheme.titleMedium,
             ),
 
@@ -106,7 +126,7 @@ class _TaskState extends State<PlayRoutine>
                     width: constraints
                         .maxHeight, // make it a square based on Expanded's Height
                     child: CustomPaint(
-                        painter: MovePainter(moveName: task.moveName)),
+                        painter: MovePainter(moveName: _task.moveName)),
                   ),
                 ),
               ),
