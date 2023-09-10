@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:custom_timer/custom_timer.dart';
+import 'dart:developer' as dev;
 
-import 'routine.dart';
-import 'task.dart';
+import 'timer_widget.dart';
+import '../routine/routine.dart';
+import '../routine/task.dart';
 import '../move/move_painter.dart';
 
 class PlayRoutine extends StatefulWidget {
@@ -33,15 +34,6 @@ class _TaskState extends State<PlayRoutine>
       ? "Next: ${widget.routine.tasks[taskIndex + 1].moveName}"
       : "";
 
-  // Timer Controller
-  late final CustomTimerController _controller = CustomTimerController(
-    vsync: this,
-    begin: const Duration(),
-    end: const Duration(),
-    initialState: CustomTimerState.reset,
-    interval: CustomTimerInterval.seconds,
-  );
-
   // Methods
   void nextTask() {
     if (taskIndex < widget.routine.tasks.length - 1) {
@@ -59,12 +51,10 @@ class _TaskState extends State<PlayRoutine>
     }
   }
 
-  void playPause() {
-    if (_controller.state.value == CustomTimerState.counting) {
-      _controller.pause();
-    } else {
-      _controller.start();
-    }
+  void playPause() {}
+
+  void onTimerFinished() {
+    nextTask();
   }
 
   // Overrides
@@ -74,18 +64,7 @@ class _TaskState extends State<PlayRoutine>
     TextTheme textTheme = themeData.textTheme;
 
     Task task = widget.routine.tasks[taskIndex];
-
-    // set Timer Controller to task.moveSeconds
-    _controller.begin = Duration(seconds: task.moveSeconds);
-    _controller.jumpTo(Duration(seconds: task.moveSeconds));
-
-    // Listen for Timer Controller to reach "finished"
-    _controller.state.addListener(() {
-      if (_controller.state.value == CustomTimerState.finished) {
-        nextTask();
-        _controller.start();
-      }
-    });
+    dev.log(task.moveName, name: "PlayRoutine");
 
     return Scaffold(
       appBar: AppBar(
@@ -124,17 +103,9 @@ class _TaskState extends State<PlayRoutine>
             ),
 
             // Timer
-            CustomTimer(
-              controller: _controller,
-              builder: (state, remaining) {
-                int totalSecondsRemaining =
-                    (remaining.duration.inMilliseconds / 1000).round();
-                int minutesRemaining = (totalSecondsRemaining / 60).floor();
-                int secondsRemaining = totalSecondsRemaining % 60;
-                String timerString =
-                    "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}";
-                return Text(timerString, style: textTheme.headlineMedium);
-              },
+            TaskTimer(
+              duration: Duration(seconds: task.moveSeconds),
+              onFinished: onTimerFinished,
             ),
 
             // Buttons

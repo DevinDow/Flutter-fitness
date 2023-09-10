@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'move/move_library.dart';
 import 'routine/routine_library.dart';
 import 'routine/routine.dart';
-import 'routine/play_routine.dart';
+import 'play/play_routine.dart';
 
 void main() {
   MoveLibrary.generate(); // generate Library of Moves
