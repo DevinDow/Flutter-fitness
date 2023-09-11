@@ -4,8 +4,8 @@ import 'dart:developer' as dev;
 class TimerController {
   Duration remaining;
 
-  final Function() _onTick;
-  final Function() _onFinished;
+  Function()? onTick;
+  Function()? onFinished;
 
   Timer? _timer;
 
@@ -13,13 +13,9 @@ class TimerController {
 
   // Constructor
   TimerController({
-    required this.remaining,
-    required dynamic Function() onTick,
-    required dynamic Function() onFinished,
-  })  : _onFinished = onFinished,
-        _onTick = onTick {
-    dev.log("Constructor: $remaining", name: "TimerController");
-  }
+    this.remaining = const Duration(),
+    this.onFinished,
+  });
 
   // Methods
   void toggleTimer() {
@@ -32,9 +28,7 @@ class TimerController {
 
   void startTimer() {
     dev.log("startTimer()", name: "TimerController");
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      tick();
-    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) => tick());
   }
 
   void pauseTimer() {
@@ -47,11 +41,11 @@ class TimerController {
 
     if (seconds < 0) {
       dev.log("Finished", name: "TimerController");
-      _onFinished.call();
+      onFinished?.call();
     } else {
       remaining = Duration(seconds: seconds);
       dev.log("remaining = $remaining", name: "TimerController");
-      _onTick.call();
+      onTick?.call();
     }
   }
 }

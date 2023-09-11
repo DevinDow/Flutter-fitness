@@ -17,14 +17,20 @@ class TaskTimer extends StatefulWidget {
 
 class _TaskTimerState extends State<TaskTimer> {
   @override
+  void initState() {
+    widget.controller.onTick = () {
+      setState(() {}); // cause TaskTimer widget to build() on each tick
+    };
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
     String twoDigits(int n) => n.toString().padLeft(2, '0');
 
-    dev.log("TimerController.remaining = ${widget.controller.remaining}",
-        name: "Timer");
     final minutesRemaining =
         widget.controller.remaining.inMinutes.remainder(60);
     final secondsRemaining =
@@ -32,7 +38,7 @@ class _TaskTimerState extends State<TaskTimer> {
 
     String timerString =
         "$minutesRemaining:${secondsRemaining.toString().padLeft(2, "0")}";
-    dev.log("timerString = $timerString", name: "Timer");
+    //dev.log("timerString = $timerString", name: "Timer");
 
     return Text(timerString, style: textTheme.headlineMedium);
   }

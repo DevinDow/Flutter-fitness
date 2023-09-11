@@ -40,7 +40,6 @@ class _PlayRoutineState extends State<PlayRoutine> {
 
     _timerController = TimerController(
       remaining: Duration(seconds: _task.moveSeconds),
-      onTick: onTimerTick,
       onFinished: onTimerFinished,
     );
     super.initState();
@@ -77,10 +76,6 @@ class _PlayRoutineState extends State<PlayRoutine> {
 
   void playPause() {
     _timerController.toggleTimer();
-  }
-
-  void onTimerTick() {
-    setState(() {});
   }
 
   void onTimerFinished() {

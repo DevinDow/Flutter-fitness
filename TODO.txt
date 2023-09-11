@@ -5,6 +5,7 @@ TODO
 - Done
 
 BUGS
+- should Move not keep repainting itself when nothing changes?  What about size changed?
 
 UI
 - Routine List
