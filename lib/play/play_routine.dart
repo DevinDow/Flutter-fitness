@@ -20,10 +20,11 @@ class PlayRoutine extends StatefulWidget {
 }
 
 class _PlayRoutineState extends State<PlayRoutine> {
-  int _taskIndex = 0; // determines current Task of the Routine
+  late int _taskIndex; // determines current Task of the Routine
   set taskIndex(int newIndex) {
     _taskIndex = newIndex;
     _task = widget.routine.tasks[_taskIndex];
+    _moveName = _task.moveName;
     if (_task.moveSeconds > 0) {
       _timerController.remaining = Duration(seconds: _task.moveSeconds);
     } else {
@@ -32,16 +33,18 @@ class _PlayRoutineState extends State<PlayRoutine> {
   }
 
   late Task _task; // current Task of the Routine
+  String _moveName = ""; // either the current Task's Move or Rest or Done
   late final TimerController _timerController;
 
   @override
   void initState() {
-    _task = widget.routine.tasks[_taskIndex];
-
     _timerController = TimerController(
-      remaining: Duration(seconds: _task.moveSeconds),
       onFinished: onTimerFinished,
     );
+
+    taskIndex =
+        0; // have this setter execute to set up everything for first task
+
     super.initState();
   }
 
@@ -88,7 +91,8 @@ class _PlayRoutineState extends State<PlayRoutine> {
     ThemeData themeData = Theme.of(context);
     TextTheme textTheme = themeData.textTheme;
 
-    dev.log("moveName = ${_task.moveName}, duration = ${_task.moveSeconds}",
+    dev.log(
+        "moveName = $_moveName, move seconds = ${_task.moveSeconds}, rest seconds = ${_task.restSeconds}",
         name: "PlayRoutine");
 
     return Scaffold(
@@ -100,7 +104,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
           children: [
             // Move Name
             Text(
-              _task.moveName,
+              _moveName,
               style: textTheme.headlineLarge,
             ),
 
@@ -120,8 +124,8 @@ class _PlayRoutineState extends State<PlayRoutine> {
                   builder: (_, constraints) => SizedBox(
                     width: constraints
                         .maxHeight, // make it a square based on Expanded's Height
-                    child: CustomPaint(
-                        painter: MovePainter(moveName: _task.moveName)),
+                    child:
+                        CustomPaint(painter: MovePainter(moveName: _moveName)),
                   ),
                 ),
               ),
