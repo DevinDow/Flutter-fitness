@@ -44,7 +44,7 @@ class TimerController {
       onFinished?.call();
     } else {
       remaining = Duration(seconds: seconds);
-      dev.log("remaining = $remaining", name: "TimerController");
+      dev.log("Tick - remaining = $remaining", name: "TimerController");
       onTick?.call();
     }
   }
