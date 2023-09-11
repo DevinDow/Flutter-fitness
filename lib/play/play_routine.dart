@@ -22,6 +22,7 @@ class PlayRoutine extends StatefulWidget {
 class _PlayRoutineState extends State<PlayRoutine> {
   late Task _task; // current Task of the Routine
   String _moveName = ""; // either the current Task's Move or Rest or Done
+  String _instructions = ""; // the current Move's Instructions'
   bool resting = false;
 
   late int _taskIndex; // determines current Task of the Routine
@@ -33,6 +34,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
       _moveName = _task.moveName;
       if (_task.moveSeconds > 0) {
         _timerController.remaining = Duration(seconds: _task.moveSeconds);
+        _instructions = _task.instructions;
         resting = false;
       } else {
         _timerController.pauseTimer();
@@ -73,6 +75,10 @@ class _PlayRoutineState extends State<PlayRoutine> {
         taskIndex = _taskIndex + 1;
       });
     } else {
+      setState(() {
+        _moveName = "Done";
+        _instructions = "";
+      });
       _timerController.pauseTimer();
     }
   }
@@ -95,6 +101,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
       setState(() {
         resting = true;
         _moveName = "Rest";
+        _instructions = "";
         _timerController.remaining = Duration(seconds: _task.restSeconds);
       });
     } else {
@@ -127,7 +134,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
 
             // Instructions
             Text(
-              _task.instructions,
+              _instructions,
               style: textTheme.titleMedium,
             ),
 

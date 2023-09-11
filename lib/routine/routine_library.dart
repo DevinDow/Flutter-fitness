@@ -24,7 +24,6 @@ class RoutineLibrary {
         moveName: MoveLibrary.MOUNTAIN_POSE, moveSeconds: 3, restSeconds: 2));
     routine.tasks.add(
         Task(moveName: MoveLibrary.HIGH_KNEES, moveSeconds: 5, restSeconds: 2));
-    routine.tasks.add(Task(moveName: MoveLibrary.DONE));
     add(routine);
 
     routine = Routine(
@@ -45,8 +44,8 @@ class RoutineLibrary {
     routine.tasks.add(Task(
         moveName: MoveLibrary.MOUNTAIN_POSE,
         instructions: "Roll up slowly.  Stand tall.  Breathe.",
-        moveSeconds: 10,
-        restSeconds: 5));
+        moveSeconds: 3,
+        restSeconds: 2));
     add(routine);
   }
 }
