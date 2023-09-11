@@ -20,20 +20,26 @@ class PlayRoutine extends StatefulWidget {
 }
 
 class _PlayRoutineState extends State<PlayRoutine> {
-  late int _taskIndex; // determines current Task of the Routine
-  set taskIndex(int newIndex) {
-    _taskIndex = newIndex;
-    _task = widget.routine.tasks[_taskIndex];
-    _moveName = _task.moveName;
-    if (_task.moveSeconds > 0) {
-      _timerController.remaining = Duration(seconds: _task.moveSeconds);
-    } else {
-      _timerController.pauseTimer();
-    }
-  }
-
   late Task _task; // current Task of the Routine
   String _moveName = ""; // either the current Task's Move or Rest or Done
+  bool resting = false;
+
+  late int _taskIndex; // determines current Task of the Routine
+  set taskIndex(int newIndex) {
+    // set up the Task at this index
+    setState(() {
+      _taskIndex = newIndex;
+      _task = widget.routine.tasks[_taskIndex];
+      _moveName = _task.moveName;
+      if (_task.moveSeconds > 0) {
+        _timerController.remaining = Duration(seconds: _task.moveSeconds);
+        resting = false;
+      } else {
+        _timerController.pauseTimer();
+      }
+    });
+  }
+
   late final TimerController _timerController;
 
   @override
@@ -66,6 +72,8 @@ class _PlayRoutineState extends State<PlayRoutine> {
       setState(() {
         taskIndex = _taskIndex + 1;
       });
+    } else {
+      _timerController.pauseTimer();
     }
   }
 
@@ -82,7 +90,16 @@ class _PlayRoutineState extends State<PlayRoutine> {
   }
 
   void onTimerFinished() {
-    nextTask();
+    if (!resting && _task.restSeconds > 0) {
+      // finished move, rest if restSeconds
+      setState(() {
+        resting = true;
+        _moveName = "Rest";
+        _timerController.remaining = Duration(seconds: _task.restSeconds);
+      });
+    } else {
+      nextTask();
+    }
   }
 
   // Overrides
