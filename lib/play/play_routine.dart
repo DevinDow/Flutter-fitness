@@ -128,7 +128,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
             ),
 
             // Timer
-            TaskTimer(controller: _timerController),
+            Timer(controller: _timerController),
 
             // Buttons
             Row(

@@ -3,8 +3,8 @@ import 'dart:developer' as dev;
 
 import 'timer_controller.dart';
 
-class TaskTimer extends StatefulWidget {
-  const TaskTimer({
+class Timer extends StatefulWidget {
+  const Timer({
     Key? key,
     required this.controller,
   }) : super(key: key);
@@ -12,10 +12,10 @@ class TaskTimer extends StatefulWidget {
   final TimerController controller;
 
   @override
-  State<TaskTimer> createState() => _TaskTimerState();
+  State<Timer> createState() => _TimerState();
 }
 
-class _TaskTimerState extends State<TaskTimer> {
+class _TimerState extends State<Timer> {
   @override
   void initState() {
     widget.controller.onTick = () {
