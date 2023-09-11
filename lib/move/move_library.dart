@@ -19,8 +19,9 @@ class MoveLibrary {
     generateStandingProfileMoves();
   }
 
-  static const String MOUNTAIN_POSE = "Mountain Pose";
+  static const String REST = "Rest";
   static const String DONE = "Done";
+  static const String MOUNTAIN_POSE = "Mountain Pose";
   static const String HIGH_KNEES = "High Knees";
 
   static void generateStandingFrontalMoves() {

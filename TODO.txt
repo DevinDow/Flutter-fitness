@@ -1,8 +1,7 @@
 TODO
 ----
 
-- Rest Time & Pose
-- Done
+- Rest & Done Poses
 
 BUGS
 - should Move not keep repainting itself when nothing changes?  What about size changed?
@@ -11,8 +10,6 @@ UI
 - Routine List
     - Total Time
 - executing a Routine
-    - Rest Time
-    - Play/Pause improvements
     - GestureDetector for Pause/Next
     - Read Aloud
 

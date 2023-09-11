@@ -5,6 +5,7 @@ import 'timer_controller.dart';
 import 'timer_widget.dart';
 import '../routine/routine.dart';
 import '../routine/task.dart';
+import '../move/move_library.dart';
 import '../move/move_painter.dart';
 
 class PlayRoutine extends StatefulWidget {
@@ -76,7 +77,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
       });
     } else {
       setState(() {
-        _moveName = "Done";
+        _moveName = MoveLibrary.DONE;
         _instructions = "";
       });
       _timerController.pauseTimer();
@@ -100,7 +101,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
       // finished move, rest if restSeconds
       setState(() {
         resting = true;
-        _moveName = "Rest";
+        _moveName = MoveLibrary.REST;
         _instructions = "";
         _timerController.remaining = Duration(seconds: _task.restSeconds);
       });
