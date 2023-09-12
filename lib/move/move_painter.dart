@@ -23,7 +23,7 @@ class MovePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.translate(size.width / 2, size.height); // Origi at floor center
+    canvas.translate(size.width / 2, size.height); // Origin at floor-center
     double scale = size.height / BITMAP_INCHES;
     canvas.scale(
         scale, scale); // Scale to Inches that the virtual window represents
