@@ -17,6 +17,7 @@ class MoveLibrary {
   static void generate() {
     generateStandingFrontalMoves();
     generateStandingProfileMoves();
+    generateSittingMoves();
   }
 
   static const String REST = "Rest";
@@ -63,6 +64,34 @@ class MoveLibrary {
         isShoulderProfile: true,
         isHipsProfile: true,
         waistY: move.pose.lLeg!.height + move.pose.lLeg!.thickness / 2);
+    add(move);
+  }
+
+  static void generateSittingMoves() {
+    MoveWithPose move = MoveWithPose(name: REST);
+    move.pose.torso = Torso(waistY: Torso.thickness / 2);
+    Angle legProxAngle = Angle.W - const Angle.degrees(10);
+    Angle legDistAngle = Angle.E - const Angle.degrees(20);
+    move.pose.rLeg = Leg(
+        proximalAngle: legProxAngle,
+        proximalLengthRatio: 0.8,
+        distalAngle: legDistAngle,
+        distalLengthRatio: 0.8);
+    move.pose.lLeg = Leg(
+        proximalAngle: legProxAngle.mirror,
+        proximalLengthRatio: 0.8,
+        distalAngle: legDistAngle.mirror,
+        distalLengthRatio: 0.8);
+    Angle armProximalAngle = Angle.S - const Angle.degrees(5);
+    Angle armDistalAngle = Angle.W + const Angle.degrees(15);
+    move.pose.rArm = Arm(
+        proximalAngle: armProximalAngle,
+        distalAngle: armDistalAngle,
+        distalLengthRatio: 0.8);
+    move.pose.lArm = Arm(
+        proximalAngle: armProximalAngle.mirror,
+        distalAngle: armDistalAngle.mirror,
+        distalLengthRatio: 0.8);
     add(move);
   }
 }

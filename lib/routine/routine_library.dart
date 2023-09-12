@@ -12,6 +12,10 @@ class RoutineLibrary {
   static void generate() {
     generateTestRoutines();
     generateMorningYoga();
+
+    generateMeditation(3);
+    generateMeditation(5);
+    generateMeditation(10);
   }
 
   static void generateTestRoutines() {
@@ -42,10 +46,23 @@ class RoutineLibrary {
       category: Categories.warmup,
     );
     routine.tasks.add(Task(
-        moveName: MoveLibrary.MOUNTAIN_POSE,
-        instructions: "Roll up slowly.  Stand tall.  Breathe.",
+        moveName: MoveLibrary.REST,
+        instructions: "Breathe.",
         moveSeconds: 3,
         restSeconds: 2));
+    add(routine);
+  }
+
+  static void generateMeditation(int minutes) {
+    Routine routine = Routine(
+      name: "$minutes' Meditation",
+      description: "Meditation Timer",
+      category: Categories.meditation,
+    );
+    routine.tasks.add(Task(
+        moveName: MoveLibrary.REST,
+        instructions: "Breathe.",
+        moveSeconds: minutes * 60));
     add(routine);
   }
 }

@@ -1,9 +1,8 @@
 TODO
 ----
 
-- Rest & Done Poses
-
 BUGS
+- mouse move over Buttons causes MovePainter
 - should Move not keep repainting itself when nothing changes?  What about size changed?
 
 UI
