@@ -2,15 +2,14 @@ TODO
 ----
 
 BUGS
-- mouse move over Buttons causes MovePainter
-- should Move not keep repainting itself when nothing changes?  What about size changed?
 
 UI
 - Routine List
     - Total Time
 - executing a Routine
+    - Switch Sides
     - GestureDetector for Pause/Next
-    - Read Aloud
+    - Read Aloud (TTS)
 
 RoutineLibrary & MoveLibrary
 - Props

@@ -72,23 +72,27 @@ class _PlayRoutineState extends State<PlayRoutine> {
   // Methods
   void nextTask() {
     if (_taskIndex < widget.routine.tasks.length - 1) {
-      setState(() {
-        taskIndex = _taskIndex + 1;
-      });
+      taskIndex = _taskIndex + 1;
     } else {
       setState(() {
         _moveName = MoveLibrary.DONE;
         _instructions = "";
+        _timerController.remaining = const Duration();
       });
       _timerController.pauseTimer();
     }
   }
 
   void prevTask() {
-    if (_taskIndex > 0) {
-      setState(() {
-        taskIndex = _taskIndex - 1;
-      });
+    if (resting) {
+      // back to current Move from Resting
+      taskIndex = _taskIndex;
+    } else if (_taskIndex > 0) {
+      // Previous Task
+      taskIndex = _taskIndex - 1;
+    } else {
+      // restart one-Move Routines
+      taskIndex = _taskIndex;
     }
   }
 
