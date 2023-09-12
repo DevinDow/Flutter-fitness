@@ -8,7 +8,9 @@ import '../routine/task.dart';
 import '../move/move_library.dart';
 import '../move/move_painter.dart';
 
+/// Widget for UI to Play a Routine by stepping through the Tasks/Moves using a Timer and Buttons.
 class PlayRoutine extends StatefulWidget {
+  /// The Routine to play.
   final Routine routine;
 
   const PlayRoutine({
@@ -21,14 +23,23 @@ class PlayRoutine extends StatefulWidget {
 }
 
 class _PlayRoutineState extends State<PlayRoutine> {
-  late Task _task; // current Task of the Routine
-  String _moveName = ""; // either the current Task's Move or Rest or Done
-  String _instructions = ""; // the current Move's Instructions'
+  /// the current Task of the Routine
+  late Task _task;
+
+  /// either the current Task's Move or Rest or Done
+  String _moveName = "";
+
+  /// the current Move's Instructions'
+  String _instructions = "";
+
+  /// Waiting _task.restSeconds in the Rest Move before advancing to next Move.
   bool resting = false;
 
-  late int _taskIndex; // determines current Task of the Routine
+  /// Determines current Task of the Routine.
+  late int _taskIndex;
+
+  /// Sets up the Task at this index.
   set taskIndex(int newIndex) {
-    // set up the Task at this index
     setState(() {
       _taskIndex = newIndex;
       _task = widget.routine.tasks[_taskIndex];
@@ -51,25 +62,26 @@ class _PlayRoutineState extends State<PlayRoutine> {
       onFinished: onTimerFinished,
     );
 
-    taskIndex =
-        0; // have this setter execute to set up everything for first task
+    taskIndex = 0; // set up the first Task
 
     super.initState();
   }
 
-  // remainingCount
+  /// remainingCount = integer count of Tasks remaining in this Routine
   int get remainingCount => widget.routine.tasks.length - (_taskIndex + 1);
 
-  // remainingString (ex. "10 more = 4 min")
+  /// remainingString (ex. "10 more = 4 min")
   String get remainingString =>
       (remainingCount > 0) ? "$remainingCount more = ? min" : "";
 
-  // nextMoveString (ex. "Next: Jumping Jacks")
+  /// nextMoveString (ex. "Next: Jumping Jacks")
   String get nextMoveString => (remainingCount > 0)
       ? "Next: ${widget.routine.tasks[_taskIndex + 1].moveName}"
       : "";
 
   // Methods
+
+  /// Advance to next Task or DONE.
   void nextTask() {
     if (_taskIndex < widget.routine.tasks.length - 1) {
       taskIndex = _taskIndex + 1;
@@ -83,6 +95,9 @@ class _PlayRoutineState extends State<PlayRoutine> {
     }
   }
 
+  /// Go back to previous Task.
+  /// Resting restarts current Task.
+  /// One-Move Routines simply restart.
   void prevTask() {
     if (resting) {
       // back to current Move from Resting
