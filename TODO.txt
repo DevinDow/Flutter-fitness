@@ -1,11 +1,11 @@
 TODO
 ----
 
+- main's routine.ran icon does not update when returning from playing a Routine
+
 BUGS
 
 UI
-- Routine List
-    - Total Time
 - executing a Routine
     - Switch Sides
     - GestureDetector for Pause/Next

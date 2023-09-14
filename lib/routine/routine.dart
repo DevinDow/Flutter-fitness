@@ -18,9 +18,16 @@ class Routine {
   final String name;
   String description;
   Categories category;
-  int totalMinutes = 11;
   bool ran = false;
   List<Task> tasks = List.empty(growable: true);
+
+  int get totalMinutes {
+    int totalSeconds = 0;
+    for (Task task in tasks) {
+      totalSeconds += task.moveSeconds + task.restSeconds;
+    }
+    return (totalSeconds / 60).ceil();
+  }
 
   Routine({
     required this.name,

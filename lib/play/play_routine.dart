@@ -90,6 +90,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
         _moveName = MoveLibrary.DONE;
         _instructions = "";
         _timerController.remaining = const Duration();
+        widget.routine.ran = true;
       });
       _timerController.pauseTimer();
     }
