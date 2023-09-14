@@ -1,0 +1,1 @@
+flutter build web --base-href /fitness/ --output C:\Development\Websites\DevinDow.github.io\fitness
