@@ -29,7 +29,7 @@ class _PlayRoutineState extends State<PlayRoutine> {
   /// either the current Task's Move or Rest or Done
   String _moveName = "";
 
-  /// the current Move's Instructions'
+  /// the current Move's Instructions
   String _instructions = "";
 
   /// Waiting _task.restSeconds in the Rest Move before advancing to next Move.
